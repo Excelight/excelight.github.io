@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Excelight">
+    <meta name="description" content="Excelight&#39;s personal website">
+    <meta name="keywords" content="blog,developer,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="将代码转换为漂亮的，地道的Python代码[操作指南，干货]"/>
+<meta name="twitter:description" content="参考: Raymond Hettinger在PyCon US 2013上的演讲 Transforming Code into Beautiful, Idiomatic Python
+ 立即改变  将传统的使用索引i的循环方式改变为python core的习惯方式 学习for-else语句，以及带有两个参数形式的iter()之类的高级技术 提升自己的技艺，并且追求干净、快速、地道的python代码  遍历一串顺序的数字：
+for i in [0, 1, 2, 3, 4, 5]: print i**2 for i in range(6): print i**2 for i in xragne(6): #xrange是range的iter版 print i**2 遍历一个数组：
+colors = [&#39;red&#39;, &#39;green&#39;, &#39;blue&#39;, &#39;yellow&#39;] for i in range(len(colors)): print colors[i] for color in colors: print color 反向遍历：
+colors = [&#39;red&#39;, &#39;green&#39;, &#39;blue&#39;, &#39;yellow&#39;] for i in range(len(colors)-1, -1, -1): print colors[i] for color in reversed(colors): print color 遍历同时获取索引编号："/>
+
+
+    <base href="http://www.example.com/posts/change_python_code_style/">
+    <title>
+  将代码转换为漂亮的，地道的Python代码[操作指南，干货] · Excelight&#39;s Blog
+</title>
+
+    <link rel="canonical" href="http://www.example.com/posts/change_python_code_style/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="http://www.example.com/css/coder.min.a3307e096757a84995f145daccdad26307f88b657e9946d207d011e314ef1442.css" integrity="sha256-ozB&#43;CWdXqEmV8UXazNrSYwf4i2V&#43;mUbSB9AR4xTvFEI=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="http://www.example.com/css/custom.css">
+    
+
+    <link rel="icon" type="image/png" href="http://www.example.com/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="http://www.example.com/img/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class=" ">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="http://www.example.com">
+      Excelight&#39;s Blog
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="http://www.example.com/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="http://www.example.com/tags/">Tags</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="http://www.example.com/about/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">将代码转换为漂亮的，地道的Python代码[操作指南，干货]</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2015-11-29T15:56:16&#43;08:00'>
+                November 29, 2015
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              5 minutes read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="http://www.example.com/tags/python/">python</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+
+<blockquote>
+<p>参考: Raymond Hettinger在PyCon US 2013上的演讲 <a href="https://www.youtube.com/watch?v=OSGv2VnC0go">Transforming Code into Beautiful, Idiomatic Python</a></p>
+</blockquote>
+
+<h3 id="立即改变">立即改变</h3>
+
+<ul>
+<li>将传统的使用索引i的循环方式改变为python core的习惯方式</li>
+<li>学习for-else语句，以及带有两个参数形式的iter()之类的高级技术</li>
+<li>提升自己的技艺，并且追求干净、快速、地道的python代码</li>
+</ul>
+
+<p>遍历一串顺序的数字：</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> [0, 1, 2, 3, 4, 5]:
+    <span style="font-weight:bold">print</span> i**2
+
+<span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(6):
+    <span style="font-weight:bold">print</span> i**2
+
+<span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> xragne(6):    <span style="font-style:italic">#xrange是range的iter版</span>
+    <span style="font-weight:bold">print</span> i**2</code></pre></div>
+<p>遍历一个数组：</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">colors = [<span style="font-style:italic">&#39;red&#39;</span>, <span style="font-style:italic">&#39;green&#39;</span>, <span style="font-style:italic">&#39;blue&#39;</span>, <span style="font-style:italic">&#39;yellow&#39;</span>]
+<span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(len(colors)):
+    <span style="font-weight:bold">print</span> colors[i]
+
+<span style="font-weight:bold">for</span> color <span style="font-weight:bold">in</span> colors:
+    <span style="font-weight:bold">print</span> color</code></pre></div>
+<p>反向遍历：</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">colors = [<span style="font-style:italic">&#39;red&#39;</span>, <span style="font-style:italic">&#39;green&#39;</span>, <span style="font-style:italic">&#39;blue&#39;</span>, <span style="font-style:italic">&#39;yellow&#39;</span>]
+<span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(len(colors)-1, -1, -1):
+    <span style="font-weight:bold">print</span> colors[i]
+
+<span style="font-weight:bold">for</span> color <span style="font-weight:bold">in</span> reversed(colors):
+    <span style="font-weight:bold">print</span> color</code></pre></div>
+<p>遍历同时获取索引编号：</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">colors = [<span style="font-style:italic">&#39;red&#39;</span>, <span style="font-style:italic">&#39;green&#39;</span>, <span style="font-style:italic">&#39;blue&#39;</span>, <span style="font-style:italic">&#39;yellow&#39;</span>]
+<span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(len(colors)):
+    <span style="font-weight:bold">print</span> i, <span style="font-style:italic">&#39;--&gt;&#39;</span>, colors[i]
+
+<span style="font-weight:bold">for</span> i, color <span style="font-weight:bold">in</span> enumerate(colors):
+    <span style="font-weight:bold">print</span> i, <span style="font-style:italic">&#39;--&gt;&#39;</span>, colors[i]</code></pre></div>
+<p>遍历两个数组：</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">names = [<span style="font-style:italic">&#39;raymond&#39;</span>, <span style="font-style:italic">&#39;rachel&#39;</span>, <span style="font-style:italic">&#39;matthew&#39;</span>]
+colors = [<span style="font-style:italic">&#39;red&#39;</span>, <span style="font-style:italic">&#39;green&#39;</span>, <span style="font-style:italic">&#39;blue&#39;</span>, <span style="font-style:italic">&#39;yellow&#39;</span>]
+n = min(len(names), len(colors))
+<span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(n):
+    <span style="font-weight:bold">print</span> names[i], <span style="font-style:italic">&#39;--&gt;&#39;</span>, colors[i]
+
+<span style="font-weight:bold">for</span> name, color <span style="font-weight:bold">in</span> zip(names, colors):
+    <span style="font-weight:bold">print</span> name, <span style="font-style:italic">&#39;--&gt;&#39;</span>, color
+
+<span style="font-weight:bold">for</span> name, color <span style="font-weight:bold">in</span> izip(names, colors):   <span style="font-style:italic">#izip是zip的iter版</span>
+    <span style="font-weight:bold">print</span> name, <span style="font-style:italic">&#39;--&gt;&#39;</span>, color</code></pre></div>
+<p>遍历排序数组：</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">colors = [<span style="font-style:italic">&#39;red&#39;</span>, <span style="font-style:italic">&#39;green&#39;</span>, <span style="font-style:italic">&#39;blue&#39;</span>, <span style="font-style:italic">&#39;yellow&#39;</span>]
+<span style="font-weight:bold">for</span> color <span style="font-weight:bold">in</span> sorted(colors):
+    <span style="font-weight:bold">print</span> color
+
+<span style="font-weight:bold">for</span> color <span style="font-weight:bold">in</span> sorted(colors, reverse=True):
+    <span style="font-weight:bold">print</span> color</code></pre></div>
+<p>自定义排序：</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">colors = [<span style="font-style:italic">&#39;red&#39;</span>, <span style="font-style:italic">&#39;green&#39;</span>, <span style="font-style:italic">&#39;blue&#39;</span>, <span style="font-style:italic">&#39;yellow&#39;</span>]
+<span style="font-weight:bold">def</span> compare_length(c1, c2):
+    <span style="font-weight:bold">if</span> len(c1) &lt; len(c2): <span style="font-weight:bold">return</span> -1
+    <span style="font-weight:bold">if</span> len(c1) &gt; len(c2): <span style="font-weight:bold">return</span> 1
+    <span style="font-weight:bold">return</span> 0
+<span style="font-weight:bold">print</span> sorted(colors, cmp=compare_length)   <span style="font-style:italic">#compare_length在每次比较时都要调用，总次数为nlog(n)</span>
+
+<span style="font-weight:bold">print</span> sorted(colors, key=len)    <span style="font-style:italic">#效率更高，只需调用n次</span></code></pre></div>
+<p>循环遍历时在特定条件下调用函数：</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">blocks = []
+<span style="font-weight:bold">while</span> True:
+    block = f.read(32)
+    <span style="font-weight:bold">if</span> block == <span style="font-style:italic">&#39;&#39;</span>:
+        <span style="font-weight:bold">break</span>
+    blocks.append(block)
+
+blocks = []
+<span style="font-style:italic">#双参数的iter(),第二个参数是哨兵变量，一旦和哨兵变量相同就break</span>
+<span style="font-weight:bold">for</span> block <span style="font-weight:bold">in</span> iter(partial(f.read, 32), <span style="font-style:italic">&#39;&#39;</span>): <span style="font-style:italic">#partial用于给read传递参数</span>
+    blocks.append(block)</code></pre></div>
+<p>区别出循环中的多个退出点</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="font-weight:bold">def</span> find(seq, target):
+    found = False
+    <span style="font-weight:bold">for</span> i, value <span style="font-weight:bold">in</span> enumerate(seq):
+        <span style="font-weight:bold">if</span> value == target:
+            found = True
+            <span style="font-weight:bold">break</span>
+    <span style="font-weight:bold">if</span> <span style="font-weight:bold">not</span> found:
+        <span style="font-weight:bold">return</span> -1
+    <span style="font-weight:bold">return</span> 1
+
+<span style="font-weight:bold">def</span> find(seq, target):
+    <span style="font-weight:bold">for</span> i, value <span style="font-weight:bold">in</span> enumerate(seq): <span style="font-style:italic">#使用for...else...</span>
+        <span style="font-weight:bold">if</span> value == target:
+            <span style="font-weight:bold">break</span>
+    <span style="font-weight:bold">else</span>:
+        <span style="font-weight:bold">return</span> -1
+    <span style="font-weight:bold">return</span> 1</code></pre></div>
+<h3 id="dict的技巧">dict的技巧</h3>
+
+<ul>
+<li>熟练掌握dict是一项基础的python技能</li>
+<li>这是一个基础的工具用于表达关系，连接，计数和分组</li>
+</ul>
+
+<p>遍历dict的key</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d = {<span style="font-style:italic">&#39;matthew&#39;</span>: <span style="font-style:italic">&#39;blue&#39;</span>, <span style="font-style:italic">&#39;rachel&#39;</span>: <span style="font-style:italic">&#39;green&#39;</span>, <span style="font-style:italic">&#39;raymond&#39;</span>: <span style="font-style:italic">&#39;red&#39;</span>}
+<span style="font-weight:bold">for</span> k <span style="font-weight:bold">in</span> d:
+    <span style="font-weight:bold">print</span> k
+
+<span style="font-weight:bold">for</span> k <span style="font-weight:bold">in</span> d.keys():
+    <span style="font-weight:bold">if</span> k.startswith(<span style="font-style:italic">&#39;r&#39;</span>):
+        <span style="font-weight:bold">del</span> d[k]
+
+d = {k : d[k] <span style="font-weight:bold">for</span> k <span style="font-weight:bold">in</span> d <span style="font-weight:bold">if</span> <span style="font-weight:bold">not</span> k.startswith(<span style="font-style:italic">&#39;r&#39;</span>)}</code></pre></div>
+<p>遍历dice的key和value</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="font-weight:bold">for</span> k <span style="font-weight:bold">in</span> d:
+    <span style="font-weight:bold">print</span> k, <span style="font-style:italic">&#39;--&gt;&#39;</span>, d[k]
+
+<span style="font-weight:bold">for</span> k, v <span style="font-weight:bold">in</span> d.items():
+   <span style="font-weight:bold">print</span> k, <span style="font-style:italic">&#39;--&gt;&#39;</span>, v
+
+<span style="font-weight:bold">for</span> k, v <span style="font-weight:bold">in</span> d.iteritems():   <span style="font-style:italic">#iteritems是items的iter版</span>
+    <span style="font-weight:bold">print</span> k, <span style="font-style:italic">&#39;--&gt;&#39;</span>, v</code></pre></div>
+<p>通过pair创建dict</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">names = [<span style="font-style:italic">&#39;raymond&#39;</span>, <span style="font-style:italic">&#39;rachel&#39;</span>, <span style="font-style:italic">&#39;matthew&#39;</span>]
+colors = [<span style="font-style:italic">&#39;red&#39;</span>, <span style="font-style:italic">&#39;green&#39;</span>, <span style="font-style:italic">&#39;blue&#39;</span>]
+
+d = dict(izip(names, colors))</code></pre></div>
+<p>使用dict对list中元素计数</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">colors = [<span style="font-style:italic">&#39;red&#39;</span>, <span style="font-style:italic">&#39;green&#39;</span>, <span style="font-style:italic">&#39;red&#39;</span>, <span style="font-style:italic">&#39;blue&#39;</span>, <span style="font-style:italic">&#39;green&#39;</span>, <span style="font-style:italic">&#39;red&#39;</span>]
+d = {}
+<span style="font-weight:bold">for</span> color <span style="font-weight:bold">in</span> colors:
+    <span style="font-weight:bold">if</span> color <span style="font-weight:bold">not</span> <span style="font-weight:bold">in</span> d:
+        d[color] = 0
+    d[color] += 1
+
+d = {}
+<span style="font-weight:bold">for</span> color <span style="font-weight:bold">in</span> colors:
+    <span style="font-style:italic">#使用get来减少了对元素是否存在的判断</span>
+    d[color] = d.get(color, 0) + 1
+
+d = defaultdict(int)
+<span style="font-weight:bold">for</span> color <span style="font-weight:bold">in</span> colors:
+    d[color] += 1</code></pre></div>
+<p>使用dict对list中元素分组</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">name = [<span style="font-style:italic">&#39;raymond&#39;</span>, <span style="font-style:italic">&#39;rachel&#39;</span>, <span style="font-style:italic">&#39;matthew&#39;</span>, <span style="font-style:italic">&#39;roger&#39;</span>, <span style="font-style:italic">&#39;betty&#39;</span>, <span style="font-style:italic">&#39;melissa&#39;</span>, <span style="font-style:italic">&#39;judith&#39;</span>, <span style="font-style:italic">&#39;charlie&#39;</span>]
+
+d = {}
+<span style="font-weight:bold">for</span> name <span style="font-weight:bold">in</span> names:
+    key = len(name)
+    <span style="font-weight:bold">if</span> key <span style="font-weight:bold">not</span> <span style="font-weight:bold">in</span> d:
+        d[key] = []
+    d[key].append(name)
+
+d = {}
+<span style="font-weight:bold">for</span> name <span style="font-weight:bold">in</span> names:
+    key = len(name)
+    d.setdefault(key, []).append(name)
+
+d = defaultdict(list)
+<span style="font-weight:bold">for</span> name <span style="font-weight:bold">in</span> names:
+    key = len(name)
+    d[key].append(name)</code></pre></div>
+<h3 id="提升可读性">提升可读性</h3>
+
+<ul>
+<li>位置或者索引参数是不错</li>
+<li>但是使用keywords以及names更好</li>
+<li>第一种方法对计算机来说很方便</li>
+<li>第二种方式更适应人的思考</li>
+</ul>
+
+<p>调用函数时使用参数名来传参使得表述更清晰</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">twitter_search(<span style="font-style:italic">&#39;@obama&#39;</span>, False, 20, True)
+
+twitter_search(<span style="font-style:italic">&#39;@obama&#39;</span>,  retweets=False, numtweets=20, popular=True)</code></pre></div>
+<p>当函数返回多个值得时候请用named tuples</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">doctest.testmod()
+(0,4)
+
+doctest.testmod()
+TestResults(failed=0, attempted=4)
+
+TestResults = namedtuple(<span style="font-style:italic">&#39;TestResults&#39;</span>, [<span style="font-style:italic">&#39;failed&#39;</span>, <span style="font-style:italic">&#39;attempted&#39;</span>])</code></pre></div>
+<p>Unpacking sequences</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p = <span style="font-style:italic">&#39;Raymond&#39;</span>, <span style="font-style:italic">&#39;Hettinger&#39;</span>, 0x30, <span style="font-style:italic">&#39;python@example.com&#39;</span>
+fname = p[0]
+lanme = p[1]
+age = p[2]
+email = p[3]
+
+fname, lname, age, email = p</code></pre></div>
+<p>同时更新多个变量</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="font-weight:bold">def</span> fibonacci(n):
+    x = 0
+    y = 1
+    <span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(n):
+        <span style="font-weight:bold">print</span> x
+        t = y
+        y = x + y
+        x = t
+
+<span style="font-weight:bold">def</span> fibonacci(n):
+    x, y = 0, 1
+    <span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(n):
+        <span style="font-weight:bold">print</span> x
+        x, y = y, x+y</code></pre></div>
+<h3 id="tuple的packing和unpacking">tuple的packing和unpacking</h3>
+
+<ul>
+<li>不要低估这种同时改变变量的优点，这可以避免很多由于变量更新顺序造成的错误，尤其是在做一些迭代的数值运算的时候</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp_x = x + dx * t
+tmp_y = y + dy * t
+tmp_dx = influence(m, x, y, dx, dy, partial=<span style="font-style:italic">&#39;x&#39;</span>)
+tmp_dy = influence(m, x, y, dx, dy, partial=<span style="font-style:italic">&#39;y&#39;</span>)
+x = tmp_x
+y = tmp_y
+dx = tmp_dx
+dy = tmp_dy
+
+x, y, dx, dy = (x + dx * t,
+                y + dy * t,
+                influence(m, x, y, dx, dy, partial=<span style="font-style:italic">&#39;x&#39;</span>),
+                influence(m, x, y, dx, dy, partial=<span style="font-style:italic">&#39;y&#39;</span>))</code></pre></div>
+<h3 id="字符串连接">字符串连接</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">names = [<span style="font-style:italic">&#39;raymond&#39;</span>, <span style="font-style:italic">&#39;rachel&#39;</span>, matthew<span style="font-style:italic">&#39;]</span><span style="">
+</span><span style=""></span><span style="font-style:italic">s = names[0]</span><span style="">
+</span><span style=""></span><span style="font-style:italic">for name in names[1:]:</span><span style="">
+</span><span style=""></span><span style="font-style:italic">    s += &#39;</span>, <span style="font-style:italic">&#39; + name</span><span style="">
+</span><span style=""></span><span style="font-style:italic">print s</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="font-style:italic">print &#39;</span>, <span style="font-style:italic">&#39;.join(names)</span></code></pre></div>
+<h3 id="修改sequences">修改sequences</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">names = [<span style="font-style:italic">&#39;raymond&#39;</span>, <span style="font-style:italic">&#39;rachel&#39;</span>, matthew<span style="font-style:italic">&#39;]</span><span style="">
+</span><span style=""></span><span style="font-style:italic">del names[0]</span><span style="">
+</span><span style=""></span><span style="font-style:italic">names.pop(0)</span><span style="">
+</span><span style=""></span><span style="font-style:italic">names.insert(0, &#39;</span>mark<span style="font-style:italic">&#39;)</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="font-style:italic">names = deque([&#39;</span>raymond<span style="font-style:italic">&#39;, &#39;</span>rachel<span style="font-style:italic">&#39;, matthew&#39;</span>])
+<span style="font-weight:bold">del</span> names[0]
+names.popleft()
+names.appendleft(<span style="font-style:italic">&#39;mark&#39;</span>)</code></pre></div>
+<h3 id="decorator和context-managers">Decorator和Context Managers</h3>
+
+<ul>
+<li>有利于拆分业务逻辑和控制逻辑</li>
+<li>干净，漂亮的工具来分解代码以及提升代码复用</li>
+<li>好的命名是最基本的</li>
+<li>记住:能力越大责任越大</li>
+</ul>
+
+<p>使用decorators来拆解出控制逻辑</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="font-weight:bold">def</span> web_lookup(url, saved={}):
+    <span style="font-weight:bold">if</span> url <span style="font-weight:bold">in</span> saved:                       <span style="font-style:italic">#控制逻辑</span>
+        <span style="font-weight:bold">return</span> saved[url]
+    page = urllib.urlopen(url).read()      <span style="font-style:italic">#业务逻辑</span>
+    saved[url] = page
+    <span style="font-weight:bold">return</span> page
+
+<span style="font-weight:bold">def</span> cache(func):
+    saved = {}
+    @wraps(func)
+    <span style="font-weight:bold">def</span> newfunc(*args):
+        <span style="font-weight:bold">if</span> args <span style="font-weight:bold">in</span> saved:
+            <span style="font-weight:bold">return</span> saved[args]
+        result = func(*args)
+        saved[args] = result
+        <span style="font-weight:bold">return</span> result
+    <span style="font-weight:bold">return</span> newfunc</code></pre></div>
+<p>分解出临时的上下文环境</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">old_context = getcontext().copy()
+getcontext().prec = 50
+<span style="font-weight:bold">print</span> Decimal(355) / Decimal(113)
+setcontext(old_context)
+
+<span style="font-weight:bold">with</span> localcontext(Context(prec=50)):
+    <span style="font-weight:bold">print</span> Decimal(355) / Decimal(113)</code></pre></div>
+<p>如何打开和关闭文件</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">f = open(<span style="font-style:italic">&#39;data.txt&#39;</span>)
+<span style="font-weight:bold">try</span>:
+    data = f.read()
+<span style="font-weight:bold">finally</span>:
+    f.close()
+
+<span style="font-weight:bold">with</span> open(<span style="font-style:italic">&#39;data&#39;</span>.txt<span style="font-style:italic">&#39;) as f:</span><span style="">
+</span><span style=""></span><span style="font-style:italic">    data = f.read()</span></code></pre></div>
+<p>如何使用locks</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="font-style:italic"># Make a lock</span>
+lock = threading.Lock()
+
+<span style="font-style:italic"># Old-way to use a lock</span>
+lock.acquire()
+<span style="font-weight:bold">try</span>:
+    <span style="font-weight:bold">print</span> <span style="font-style:italic">&#39;Critical section 1&#39;</span>
+    <span style="font-weight:bold">print</span> <span style="font-style:italic">&#39;Critical section 2&#39;</span>
+<span style="font-weight:bold">finally</span>:
+    lock.release()
+
+<span style="font-style:italic"># New-way to use a lock</span>
+<span style="font-weight:bold">with</span> lock:
+    <span style="font-weight:bold">print</span> <span style="font-style:italic">&#39;Critical section 1&#39;</span>
+    <span style="font-weight:bold">print</span> <span style="font-style:italic">&#39;Critical section 2&#39;</span></code></pre></div>
+<p>分解出临时的上下文环境</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="font-weight:bold">try</span>:
+    os.remove(<span style="font-style:italic">&#39;somefile.tmp&#39;</span>)
+<span style="font-weight:bold">except</span> <span style="font-weight:bold">OSError</span>:
+    <span style="font-weight:bold">pass</span>
+
+<span style="font-weight:bold">with</span> ignored(<span style="font-weight:bold">OSError</span>):
+    os.remove(<span style="font-style:italic">&#39;somefile.tmp&#39;</span>)
+
+<span style="font-style:italic"># ignored的实现，在python 3.4中已支持</span>
+@contextmanager
+<span style="font-weight:bold">def</span> ignored(*exceptions):
+    <span style="font-weight:bold">try</span>:
+        <span style="font-weight:bold">yield</span>
+    <span style="font-weight:bold">except</span> exceptions:
+        <span style="font-weight:bold">pass</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="font-weight:bold">with</span> open(<span style="font-style:italic">&#39;help.txt&#39;</span>, <span style="font-style:italic">&#39;w&#39;</span>) <span style="font-weight:bold">as</span> f:
+    oldstdout = sys.stdout
+    sys.stdout = f
+    <span style="font-weight:bold">try</span>:
+        help(pow)
+    <span style="font-weight:bold">finally</span>:
+        sys.stdout = oldstdout
+
+<span style="font-weight:bold">with</span> open(<span style="font-style:italic">&#39;help.txt&#39;</span>, <span style="font-style:italic">&#39;w&#39;</span>) <span style="font-weight:bold">as</span> f:
+    <span style="font-weight:bold">with</span> redirect_stdout(f):
+        help(pow)
+
+@contextmanager
+<span style="font-weight:bold">def</span> redirect_stdout(fileobj):
+    oldstdout = sys.stdout
+    sys.stdout = fileobj
+    <span style="font-weight:bold">try</span>:
+        <span style="font-weight:bold">yield</span> fileobj
+    <span style="font-weight:bold">finally</span>:
+        sys.stdout = oldstdout</code></pre></div>
+<h3 id="list-comprehensions-和-generator-expressions">list comprehensions 和 generator expressions</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">result = []
+<span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(10):
+    s = i ** 2
+    result.append(s)
+<span style="font-weight:bold">print</span> sum(result)
+
+<span style="font-weight:bold">print</span> sum([i ** 2 <span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(10)])
+
+<span style="font-weight:bold">print</span> sum(i ** 2 <span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(10))</code></pre></div>
+      </div>
+
+      <footer>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yourdiscussshortname" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>Concentrate</p>
+    
+     © 2019
+    
+       · 
+      Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

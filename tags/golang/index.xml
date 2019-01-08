@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on Excelight&#39;s Blog</title>
+    <link>http://www.example.com/tags/golang/</link>
+    <description>Recent content in Golang on Excelight&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 22 May 2017 16:09:35 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.example.com/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Go的12个最佳实践</title>
+      <link>http://www.example.com/posts/golang_12_best_practices/</link>
+      <pubDate>Mon, 22 May 2017 16:09:35 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/golang_12_best_practices/</guid>
+      <description>参考视频：https://www.youtube.com/watch?v=8D3Vmm1BGoY
+ 1. 避免过多的嵌套 先判断错误，错误后直接返回，而不要在错误的if块内写后续逻辑
+2. 尽量避免重复 3. 使用type switch来处理类型 调用方不用关心v的类型，不用提前转换
+switch v.(type) { case string: ... case int: ... default: ... } 4. function adapter func init() { http.HandleFunc(&amp;#34;/&amp;#34;, handler) } func handler(w http.ResponseWriter, r *http.Request) { err := doThis() if err != nil { http.Error(w, err.Error(), http.StatusInternalServerError) log.Printf(&amp;#34;handling %q: %v&amp;#34;, r.RequestURI, err) return } err := doThat() if err != nil { http.Error(w, err.Error(), http.StatusInternalServerError) log.Printf(&amp;#34;handling %q: %v&amp;#34;, r.</description>
+    </item>
+    
+  </channel>
+</rss>

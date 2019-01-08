@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Excelight&#39;s Blog</title>
+    <link>http://www.example.com/tags/python/</link>
+    <description>Recent content in Python on Excelight&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 30 Apr 2016 16:00:13 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.example.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python 环境搭建</title>
+      <link>http://www.example.com/posts/python_env_setup/</link>
+      <pubDate>Sat, 30 Apr 2016 16:00:13 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/python_env_setup/</guid>
+      <description>python源码安装
+1. 下载安装包 Python2.7.x.tgz 2. 解压 3. ./configure 4. make 5. make install pip 安装（cent os）
+yum install python-pip virtualenv安装
+pip installl virtualenv virutalenv使用
+#创建一个虚拟环境 virtualenv python_env virtualenv --no-site-packages [虚拟环境名称] #这种方式可以不安装系统中已安装的第三方package virtualenv -p /usr/local/bin/python #指定使用python解析器版本 #通常可以使用如下语句来创建一个干净的python环境:python_env virtualenv -p /usr/local/bin/python --no-site-packages python_env #启动虚拟环境 cd python_env source ./bin/activate #退出虚拟环境 deactivate #在虚拟环境安装python package pip install [package] 无法安装lxml问题的解决方法：
+yum install libxml2-python pip install lxml 将当前环境需求导出
+pip freeze &amp;gt; requirements.txt 根据导出的需求安装需要的包
+pip install -r requirements.</description>
+    </item>
+    
+    <item>
+      <title>Python常用Decorator</title>
+      <link>http://www.example.com/posts/python_useful_decorator/</link>
+      <pubDate>Tue, 08 Dec 2015 15:58:28 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/python_useful_decorator/</guid>
+      <description>参考: PythonDecoratorLibrary 
+ Function Timeout(设置函数超时) import signal import functools class TimeoutError(Exception): pass def timeout(seconds, error_message = &amp;#39;Function call timed out&amp;#39;): def decorated(func): def _handle_timeout(signum, frame): raise TimeoutError(error_message) def wrapper(*args, **kwargs): signal.signal(signal.SIGALRM, _handle_timeout) signal.alarm(seconds) try: result = func(*args, **kwargs) finally: signal.alarm(0) return result return functools.wraps(func)(wrapper) return decorated example:
+import time @timeout(1, &amp;#39;Function slow; aborted&amp;#39;) def slow_function(): time.</description>
+    </item>
+    
+    <item>
+      <title>将代码转换为漂亮的，地道的Python代码[操作指南，干货]</title>
+      <link>http://www.example.com/posts/change_python_code_style/</link>
+      <pubDate>Sun, 29 Nov 2015 15:56:16 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/change_python_code_style/</guid>
+      <description>参考: Raymond Hettinger在PyCon US 2013上的演讲 Transforming Code into Beautiful, Idiomatic Python
+ 立即改变  将传统的使用索引i的循环方式改变为python core的习惯方式 学习for-else语句，以及带有两个参数形式的iter()之类的高级技术 提升自己的技艺，并且追求干净、快速、地道的python代码  遍历一串顺序的数字：
+for i in [0, 1, 2, 3, 4, 5]: print i**2 for i in range(6): print i**2 for i in xragne(6): #xrange是range的iter版 print i**2 遍历一个数组：
+colors = [&amp;#39;red&amp;#39;, &amp;#39;green&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;] for i in range(len(colors)): print colors[i] for color in colors: print color 反向遍历：
+colors = [&amp;#39;red&amp;#39;, &amp;#39;green&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;] for i in range(len(colors)-1, -1, -1): print colors[i] for color in reversed(colors): print color 遍历同时获取索引编号：</description>
+    </item>
+    
+    <item>
+      <title>使用namedtuple代替tuple</title>
+      <link>http://www.example.com/posts/namedtuple_substitute_tuple/</link>
+      <pubDate>Sun, 22 Nov 2015 15:54:51 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/namedtuple_substitute_tuple/</guid>
+      <description>参考: Raymond Hettinger在PyCon US 2015上的演讲 Beyond PEP 8 &amp;ndash; Best practices for beautiful intelligible code
+ Python中的tuple是一个经常会用到的数据类型，比如在读取sql，csv数据时，但是他有一个非常大的问题就是一旦tuple中的元素个数变动了，那么代码是必然要一通大改了，而且使用下标的方式获取元素，时间长了完全不记得每个元素都是什么意义，当然，如果有一行注释来解释的话或许会好一点。比如这个段代码完全不知道p代表什么：
+p = (1,2) if p[0] &amp;gt; 1: print &amp;#39;xxxxxx&amp;#39; if p[1] &amp;gt; 3: print &amp;#39;yyyyyy&amp;#39; 其实自python 2.5开始对此问题已经有了一个解决方案，那就是namedtuple，来看一下是怎么用的：
+from collections import namedtuple Point = namedtuple(&amp;#39;Point&amp;#39;, [&amp;#39;x&amp;#39;, &amp;#39;y&amp;#39;]) p = Point(1,2) if p.x &amp;gt;= 1: print &amp;#39;xxxxxx&amp;#39; if p.y &amp;gt;= 3: print &amp;#39;yyyyyy&amp;#39; 通过使用namedtuple我们可以清晰地表达出tuple中每一个元素所代表的意义了</description>
+    </item>
+    
+    <item>
+      <title>编写漂亮的，可读的Python代码的最佳实践</title>
+      <link>http://www.example.com/posts/beautiful_python_code/</link>
+      <pubDate>Sun, 22 Nov 2015 10:14:52 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/beautiful_python_code/</guid>
+      <description>参考: Raymond Hettinger在PyCon US 2015上的演讲 Beyond PEP 8 &amp;ndash; Best practices for beautiful intelligible code
+通常的一些方式如list comprehension在此就不列举了，主要补充一些其他方式
+ 将非pythonic的代码做一层Adapter变成pythonic的 先看一段的代码：
+import jnettool.tools.elements.NetworkElement import jnettool.tools.Routing import jnettool.tools.RouteInspector ne = jnettool.tools.elements.NetworkElement(&amp;#39;x.x.x.x&amp;#39;) try: routing_table = ne.getRoutingTable() except jnettoll.tools.elements.MissingVar: logging.exception(&amp;#39;No routing table found&amp;#39;) ne.cleanup(&amp;#39;rollback&amp;#39;) else: num_routes = routing_table.getSize() for RToffset in range(num_routes): route = routing_table.getRouteByIndex(RToffset) name = route.getName() ipaddr = route.getIpAddr() print &amp;#34;%15s=&amp;gt; %s&amp;#34; % (name, ipaddr) finally: ne.cleanup(&amp;#39;commit&amp;#39;) ne.disconnect() 这段代码初看起来并没有什么问题，也的确没有什么问题，肯定能够正常运行，而且完全符合PEP 8标准。然而这看上去更像是一段Java的代码，带有浓烈的Java色彩，如getter, setter，getXXXByIndex，还有try&amp;hellip;except&amp;hellip;finally这一系列处理异常的方式（当然大多数语言也都是这样子），但这和Python的简约风格相去甚远。我们先来看一下理想的pythonic的版本长的样子：</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://www.example.com/about/</loc>
+    <lastmod>2019-01-08T16:06:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/vim-config/</loc>
+    <lastmod>2019-01-03T15:20:59+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/tcp_sliding_window/</loc>
+    <lastmod>2017-09-03T16:16:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/https/</loc>
+    <lastmod>2017-09-03T16:13:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/python_image_differ/</loc>
+    <lastmod>2017-07-02T16:11:07+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/golang_12_best_practices/</loc>
+    <lastmod>2017-05-22T16:09:35+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/hello_hugo/</loc>
+    <lastmod>2017-04-29T16:05:46+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/redis_sortedset_optimize/</loc>
+    <lastmod>2016-07-07T16:04:21+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/python_env_setup/</loc>
+    <lastmod>2016-04-30T16:00:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/python_useful_decorator/</loc>
+    <lastmod>2015-12-08T15:58:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/change_python_code_style/</loc>
+    <lastmod>2015-11-29T15:56:16+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/namedtuple_substitute_tuple/</loc>
+    <lastmod>2015-11-22T15:54:51+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/beautiful_python_code/</loc>
+    <lastmod>2015-11-22T10:14:52+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/</loc>
+    <lastmod>2019-01-08T16:06:57+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/tags/golang/</loc>
+    <lastmod>2017-05-22T16:09:35+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/tags/https/</loc>
+    <lastmod>2017-09-03T16:13:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/tags/other/</loc>
+    <lastmod>2017-07-02T16:11:07+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/posts/</loc>
+    <lastmod>2019-01-03T15:20:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/tags/python/</loc>
+    <lastmod>2016-04-30T16:00:13+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/tags/redis/</loc>
+    <lastmod>2016-07-07T16:04:21+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/tags/</loc>
+    <lastmod>2017-05-22T16:09:35+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/tags/tcp/</loc>
+    <lastmod>2017-09-03T16:16:12+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.example.com/tags/vim/</loc>
+    <lastmod>2019-01-03T15:20:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

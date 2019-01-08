@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Excelight&#39;s Blog</title>
+    <link>http://www.example.com/</link>
+    <description>Recent content on Excelight&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 08 Jan 2019 16:06:57 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.example.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>http://www.example.com/about/</link>
+      <pubDate>Tue, 08 Jan 2019 16:06:57 +0800</pubDate>
+      
+      <guid>http://www.example.com/about/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim常用配置</title>
+      <link>http://www.example.com/posts/vim-config/</link>
+      <pubDate>Thu, 03 Jan 2019 15:20:59 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/vim-config/</guid>
+      <description>vim常用配置及插件  基础vimrc配置文件：~/.vimrc
+set nu set ts=4 set expandtab set t_Co=256 colorscheme molokai syntax on set cursorline set cc=81 set laststatus=2 &amp;#34;let g:Powerline_symbols=&amp;#39;fancy&amp;#39; let g:Powerline_symbols=&amp;#39;unicode&amp;#39; filetype off set rtp+=~/.vim/bundle/Vundle.vim call vundle#begin() Plugin &amp;#39;VundleVim/Vundle.vim&amp;#39; Plugin &amp;#39;Lokaltog/vim-powerline&amp;#39; &amp;#34;底部状态栏 Plugin &amp;#39;Valloric/YouCompleteMe&amp;#39; &amp;#34;代码自动提示 Plugin &amp;#39;dgryski/vim-godef&amp;#39; &amp;#34;golang代码跳转 call vundle#end() filetype plugin indent on mac上安装需要先装MacVim代替系统自带vim，参照官方：https://github.com/Valloric/YouCompleteMe#mac-os-x
+&amp;gt; brew install macvim --with-override-system-vim 进入vim，执行:PluginInstall，安装所有插件
+ 安装YouCompleteMe相关依赖
+&amp;gt; cd ~/.vim/bundle/YouCompleteMe &amp;gt; ./install.py  Golang代码自动补全及跳转支持  YouCompleteMe支持golang代码补全
+&amp;gt; cd ~/.vim/bundle/YouCompleteMe &amp;gt; .</description>
+    </item>
+    
+    <item>
+      <title>TCP滑动窗口</title>
+      <link>http://www.example.com/posts/tcp_sliding_window/</link>
+      <pubDate>Sun, 03 Sep 2017 16:16:12 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/tcp_sliding_window/</guid>
+      <description>看过了一些博客后，还是准备简单记录下对滑动窗口的理解，毕竟自己动笔记录产生的记忆会更牢靠，理解也更深刻一点。参考：http://blog.chinaunix.net/uid-26275986-id-4109679.html https://www.zhihu.com/question/32255109
+ 1. 什么是滑动窗口? TCP协议头中有一个16位的窗口大小。这个窗口大小控制着发送方给接收方发送数据的速度。
+2. 滑动窗口是怎么工作的？ 假设A是发送方，B是接收方。无论发送还是接收都各自有一个缓冲区，一个是发送缓冲区（存放着需要发送的数据），一个是接收缓冲区（存放着接收到的数据）。
+B给A回复的ACK包中包含有窗口大小，A根据读取到的窗口大小来设置自身的窗口大小。这个窗口在A的发送缓冲区中从0开始向后移动，发送成功后才能移动。窗口越大，一次发送的数据就越多，反之越少。
+B每次的回复的ACK包中都会发送下次的窗口大小，通过调整窗口大小来控制发送方的发送速度，这就是所谓的流量控制。
+3. 拥塞控制 当tcp发送数据遇到网络拥塞情况时，使用一种叫做慢开始的拥塞控制方法： 1. 发送方维持一个叫做“拥塞窗口”的变量，该变量和接收端口共同决定了发送者的发送窗口 2. 当主机开始发送数据时，避免一下子将大量字节注入到网络，造成或者增加拥塞，选择发送一个1字节的试探报文 3. 当收到第一个字节的数据的确认后，就发送2个字节的报文 4. 若再次收到2个字节的确认，则发送4个字节，依次递增2的指数级 5. 最后会达到一个提前预设的“慢开始阈值”，比如24，即一次发送了24个分组，此时遵循下面的条件判定（cwnd为滑动窗口大小，ssthresh是慢开始阈值）： 1. cwnd &amp;lt; ssthresh， 继续使用慢开始算法 2. cwnd &amp;gt; ssthresh，停止使用慢开始算法，改用拥塞避免算法 3. cwnd = ssthresh，既可以使用慢开始算法，也可以使用拥塞避免算法； 6. 所谓拥塞避免算法就是：每经过一个往返时间RTT就把发送方的拥塞窗口+1，即让拥塞窗口缓慢地增大，按照线性规律增长 7. 当出现网络拥塞，比如丢包时，将慢开始阈值设为原先的一半，然后将cwnd设为1，执行慢开始算法（较低的起点，指数级增长）
+上述方法的目的是在拥塞发生时循序减少主机发送到网络中的分组数，使得发生拥塞的路由器有足够的时间把队列中积压的分组处理完毕。慢开始和拥塞控制算法常常作为一个整体使用，而快重传和快恢复则是为了减少因为拥塞导致的数据包丢失带来的重传时间，从而避免传递无用的数据到网络。快重传的机制是： 1. 接收方建立这样的机制，如果一个包丢失，则对后续的包继续发送针对该包的重传请求； 2. 一旦发送方接收到三个一样的确认，就知道该包之后出现了错误，立刻重传该包； 3. 此时发送方开始执行“快恢复”算法： 1. 慢开始阈值减半； 2. cwnd设为慢开始门限减半后的数值； 3. 执行拥塞避免算法（高起点，线性增长）；</description>
+    </item>
+    
+    <item>
+      <title>简单理解HTTPS</title>
+      <link>http://www.example.com/posts/https/</link>
+      <pubDate>Sun, 03 Sep 2017 16:13:33 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/https/</guid>
+      <description>  最近GFW搞得风生水起，各种VPN都惨遭毒手，ShadowSocks由于其基于ssl的特性貌似生存状态还好（和HTTPS相同），不过网上也有好多人说现在已经能够嗅探到ShadowSocks服务了，于是又有了后来者ShadowSocksR。本文和GFW无关，只是由此想到需要对HTTPS有些了解，以解心中的一些疑惑。 参考文献：
+HTTPS原理
+HTTPS 原理简单介绍
+详解HTTPS原理
+ 为什么需要HTTPS  防窃听，数据加密 放篡改，数据校验 防冒充，身份验证  HTTPS是如何做的？ HTTPS是HTTP+SSL/TLS。SSL是在OSI模型中的表示层和会话层工作，其通过在握手时进行身份验证和在数据传输时进行数据加密、校验来达到安全
+加密方式  公开秘钥 公开密钥加密使用一对非对称的密钥.一把私钥一把公钥.私钥不能让任何人知道,公钥任何人都能获得.也就是发送密文一方使用对方的公钥进行加密处理,对方收到被加密的信息后,再使用自己的的私钥进行解密.利用这种方法不需要发送用来解密的私钥,也不必担心密钥被盗走。缺点是慢，资源消耗大 共享秘钥 共享秘钥即对称加密，加密解密使用同一组秘钥，其缺点是秘钥如果被盗取，则形同虚设。优点是速度快   所以应充分利用两者各有的优势,将多种方法组合起来用于通信。HTTPS采用共享密钥加密和公开密钥加密两者并用的混合加密机制。在交换密钥环节使用公开密钥加密方式,之后的建立通信交换报文阶段则使用共享加密方式。
+HTTPS通讯流程 以web访问HTTPS网站为例：
+C-&amp;gt;S: 1. 发送支持的协议版本，发送一个“随机数1” S-&amp;gt;C: 2. 确定协议版本，发送一个“随机数2”，发送证书 C-&amp;gt;S: 3. 验证证书通过，发送一个公钥加密过后的“随机数3” S-&amp;gt;C: 4. 协商好的加密方法 C-&amp;gt;S: 5. 发送公钥加密之后的秘钥，之后使用秘钥加密通讯 S-&amp;gt;C: ...  发送能够支持的 SSL/TLS 协议版本，加密方法，压缩方法等，生成一个随机数1 ，之后生成发密钥时用到，并送到服务端。 确定客户端能否支持的协议版本，若没有匹配，则取消此次连接。同时也确定加密方法和压缩方法。生成一个 随机数，同时发送随机数2和证书。 客户端认证证书是否有效，若无效，页面弹出警告窗口。若有效，取出证书中的公钥。生成一个随机数3 ，并用公钥加密之后发送给服务端。 此时服务端保存有两个明文的随机数1,2和一个加密之后的随机数3(又称premaster secret)。服务器通过密钥解密出随机数 ，三个随机数通过一个密钥生成器，生成之后通讯所需的对称密钥。 此时客户端有三个随机数1,2,3，通过一个密钥生成器，生成之后通讯所需的对称密钥，通过非对称的密钥（证书中公钥多对应的密钥）对对称密钥加密传输给服务端，服务端使用私钥解密出对称密钥。  看到这里我一开始有几点疑问：1.为什么要三个随机数，前两个随机数都有可能被窃听，感觉只需要第三个随机数就够了 2. 前两步可以被窃听，那证书也被篡改的话就可以伪装成服务端和客户端通信了。不过这两个问题我在参考文献1中都得到了答案
+ 为什么要三个随机数  “不管是客户端还是服务器，都需要随机数，这样生成的密钥才不会每次都一样。由于SSL协议中证书是静态的，因此十分有必要引入随机因素来保证协商出来的密钥的随机性。对于RSA密钥交换算法来说，premaster secret本身就是一个随机数，再加上hello消息中的随机数，三个随机数通过一个密钥导出器最终导出一个对称密钥。Premaster secret的存在在于SSL协议不信任每个主机都能产生完全随机的随机数，如果随机数不随机，那么premaster secret就有可能被才出来，那么仅适用premaster secret作为密钥就不合适了，因此必须引入新的随机因素，那么客户端和服务器加上premaster secret三个随机数一同生成的密钥就不容易被猜出了，一个伪随机数可能完全不随机，可是三个伪随机数就十分接近随机了。”  证书被篡改怎么办？ 数字证书CA（Certificate authority），这个我们在浏览器中经常能够看到，这是因为浏览器中预置了一些可信任的证书颁发机构，如果你的访问的网站的证书不在这个列表里面那么就会弹出一个对话框提示你证书有问题。当然除了这个预先内置的颁发机构列表，用户还可以自己导入自己认为可信的证书，比如铁老大的12306就是这么操作的，强制用户安装他的证书。  </description>
+    </item>
+    
+    <item>
+      <title>一个简单的图片找茬工具</title>
+      <link>http://www.example.com/posts/python_image_differ/</link>
+      <pubDate>Sun, 02 Jul 2017 16:11:07 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/python_image_differ/</guid>
+      <description>大家来找茬应该大部分人都玩过吧，最近网上看到个图片找茬的活动，给出一张jpg图片文件，其中内容是左右两边各一张相似的图片，中间有白色的背景作为间隔，需要找出两张图的不同之处，由于自己眼力不行于是就想通过程序来实现。本文就来介绍一下这个简单的找茬程序，我称之为imageDiffer。源代码可在https://github.com/Excelight/imageDiffer 找到
+ 需求 根据传入的一张jpg图片(包含左右各一张图)，显示出两张图片的不同之处
+工具  语言：python lib: Pillow，一个python图像处理库  流程 1. 图片分割 这一步，我们需要将传入的图片分割成两个大小相同的图片，作为后续找不同的基础。这一步我们使用了最简单的方式就是，直接对半分，可以使用Image.crop函数
+from PIL import Image, ImageChops im = Image.open(path) #拆分成左右两个 width, height = im.size imLeft = im.crop(0, 0, width/2, height) imRight = im.crop(width/2, 0, width, height) 2. 背景去除 由于第1步得到的结果存在一些边框，而且左侧图片的边框在右边，右侧图片的边框在左边，这将导致两张图片没有办法直接做比较，所以需要把边框去除，这可以用到ImageChops这个类中的几个方法，我们写一个imageTrim函数，专门用来去除边框
+def imageTrim(imageIn, bgColor): # 创建一张纯背景色的图 imBg = Image.new(imageIn.mode, imageIn.size, bgColor) # 生成背景图和目标图的差异图，如果像素点颜色一样，那么差异图中就是纯黑色(0,0,0) diff = ImageChops.difference(imageIn, imBg) # 由于边框的颜色并非纯色，可能有一些早点，add可以用来去除早点 diff = ImageChops.add(diff, diff, scale=2.0, offset=-100) # you may adjust scale or offset here if necessary # 获取包含有内容的边框，即去除了diff中纯黑的边框 bbox = diff.</description>
+    </item>
+    
+    <item>
+      <title>Go的12个最佳实践</title>
+      <link>http://www.example.com/posts/golang_12_best_practices/</link>
+      <pubDate>Mon, 22 May 2017 16:09:35 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/golang_12_best_practices/</guid>
+      <description>参考视频：https://www.youtube.com/watch?v=8D3Vmm1BGoY
+ 1. 避免过多的嵌套 先判断错误，错误后直接返回，而不要在错误的if块内写后续逻辑
+2. 尽量避免重复 3. 使用type switch来处理类型 调用方不用关心v的类型，不用提前转换
+switch v.(type) { case string: ... case int: ... default: ... } 4. function adapter func init() { http.HandleFunc(&amp;#34;/&amp;#34;, handler) } func handler(w http.ResponseWriter, r *http.Request) { err := doThis() if err != nil { http.Error(w, err.Error(), http.StatusInternalServerError) log.Printf(&amp;#34;handling %q: %v&amp;#34;, r.RequestURI, err) return } err := doThat() if err != nil { http.Error(w, err.Error(), http.StatusInternalServerError) log.Printf(&amp;#34;handling %q: %v&amp;#34;, r.</description>
+    </item>
+    
+    <item>
+      <title>Hello Hugo!</title>
+      <link>http://www.example.com/posts/hello_hugo/</link>
+      <pubDate>Sat, 29 Apr 2017 16:05:46 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/hello_hugo/</guid>
+      <description>最近要开始捣腾Golang了，所以从工具入手，无意中看了个Go语言相关的视频，演讲者就是我现在使用的博客工具hugo的作者，所以顺便调研了下，感觉可以为我所用。
+ 把这篇文章作为新博客的首篇，一来是为了描述下这个博客的来历，二来是为了避免以后写新文章不知道如何操作，毕竟还是需要一些命令的，所以正好记录下，免得经常去翻官网
+这里先贴一下hugo的项目地址https://github.com/spf13/hugo
+创建一个博客站点 $ cd blog_site $ hugo new site . 基础信息配置 博客的基础信息的配置都在网站更目录下的config.toml中，可根据自己的需求进行修改
+新建一篇文章 $ hugo new post/new-article.md 通过上述命令，会在content目录下创建出新的md文件，进去编辑md文件即可 自动创建出来的md文件的顶部会有一些内容，date和title没有什么好解释的，draft的话表示是否是草稿，如果设置为true，则最后发布的文章中并不会出现这篇
+About页 $ hugo new about.md about.md用于博客的个人简介
+使用主题 如果是第一次使用hugo，由于hugo不自带默认主题，那么还要下载一个主题。主题可以在这里浏览：https://themes.gohugo.io 选择一个喜欢的主题下载，然后根据页面中的说明，修改配置
+$ cd themes $ git clone https://github.com/digitalcraftsman/hugo-cactus-theme.git 启动服务 #启动 $ hugo server #启动，包括草稿，即文章中draft设置为true的 $ hugo server --buildDrafts #以watch方式启动，文件如有修改会立即刷新 $ hugo server --buildDrafts --watch 在浏览器打开http://127.0.0.1:1313
+其他 写到这里对于日常使用应该是够了，还有其他的问题可以参考：http://blog.coderzh.com/2015/08/29/hugo/</description>
+    </item>
+    
+    <item>
+      <title>Redis中sorted set调优</title>
+      <link>http://www.example.com/posts/redis_sortedset_optimize/</link>
+      <pubDate>Thu, 07 Jul 2016 16:04:21 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/redis_sortedset_optimize/</guid>
+      <description>背景 公司的监控系统的缓存是使用的redis中的sorted set的数据结构来存储。但是使用过程中发现redis的内存消耗特别多，甚至撑暴内存，导致引发线上问题。后来经过计算，发现redis实际消耗的内存远比理论应消耗的内存大(理论上一个数据点包含一个时间戳32位，一个数据值最多64位，总共12字节，而实际占用空间达到150字节左右，相差10倍)，这就引发了我们对sorted set的深入研究
+如何使用 我们使用sorted set存储监控数据的格式为
+ key: metric_id (指标id，如cpu,内存) score: unix时间戳 member: unix时间戳|监控数值（如1432343233|60）  获取监控数据的时候使用 ZRANGE metric_id 0 1432343233 就可以得到按时间排序的各个数据点的值
+为何占用大量空间 sorted set的存储设计是这样的，在一个key下如果score的个数小于等于128时，采用一个最紧凑的数组来存储，不会占用额外的空间。而当个数大于128时，会使用额外的数据结构一个ziplist用于快速查找对应，一个跳表来排序，这两个数据结构会产生大量空间占用。具体可以参考http://origin.redisbook.com/datatype/sorted_set.html#sorted-set-chapter
+如何优化 由于我们使用对监控数据的存储是分不同的粒度来存储的，单个粒度的数据redis中保存的数据最多不超过400个，于是可以选择将redis默认的zset-max-ziplist-entries=128的设置修改为400，即可以达到所有数据都用最简单的数组来存储，节省了大量空间。当然这样子会在效率上产生一定的影响，不过由于我们对数据的插入操作，只会在数组尾部进行，因此不会需要移动内存，而数据清理只会在数组头部进行，也只需要一次memmove即可，所以评估下来造成的效率影响应该可以接受。</description>
+    </item>
+    
+    <item>
+      <title>Python 环境搭建</title>
+      <link>http://www.example.com/posts/python_env_setup/</link>
+      <pubDate>Sat, 30 Apr 2016 16:00:13 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/python_env_setup/</guid>
+      <description>python源码安装
+1. 下载安装包 Python2.7.x.tgz 2. 解压 3. ./configure 4. make 5. make install pip 安装（cent os）
+yum install python-pip virtualenv安装
+pip installl virtualenv virutalenv使用
+#创建一个虚拟环境 virtualenv python_env virtualenv --no-site-packages [虚拟环境名称] #这种方式可以不安装系统中已安装的第三方package virtualenv -p /usr/local/bin/python #指定使用python解析器版本 #通常可以使用如下语句来创建一个干净的python环境:python_env virtualenv -p /usr/local/bin/python --no-site-packages python_env #启动虚拟环境 cd python_env source ./bin/activate #退出虚拟环境 deactivate #在虚拟环境安装python package pip install [package] 无法安装lxml问题的解决方法：
+yum install libxml2-python pip install lxml 将当前环境需求导出
+pip freeze &amp;gt; requirements.txt 根据导出的需求安装需要的包
+pip install -r requirements.</description>
+    </item>
+    
+    <item>
+      <title>Python常用Decorator</title>
+      <link>http://www.example.com/posts/python_useful_decorator/</link>
+      <pubDate>Tue, 08 Dec 2015 15:58:28 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/python_useful_decorator/</guid>
+      <description>参考: PythonDecoratorLibrary 
+ Function Timeout(设置函数超时) import signal import functools class TimeoutError(Exception): pass def timeout(seconds, error_message = &amp;#39;Function call timed out&amp;#39;): def decorated(func): def _handle_timeout(signum, frame): raise TimeoutError(error_message) def wrapper(*args, **kwargs): signal.signal(signal.SIGALRM, _handle_timeout) signal.alarm(seconds) try: result = func(*args, **kwargs) finally: signal.alarm(0) return result return functools.wraps(func)(wrapper) return decorated example:
+import time @timeout(1, &amp;#39;Function slow; aborted&amp;#39;) def slow_function(): time.</description>
+    </item>
+    
+    <item>
+      <title>将代码转换为漂亮的，地道的Python代码[操作指南，干货]</title>
+      <link>http://www.example.com/posts/change_python_code_style/</link>
+      <pubDate>Sun, 29 Nov 2015 15:56:16 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/change_python_code_style/</guid>
+      <description>参考: Raymond Hettinger在PyCon US 2013上的演讲 Transforming Code into Beautiful, Idiomatic Python
+ 立即改变  将传统的使用索引i的循环方式改变为python core的习惯方式 学习for-else语句，以及带有两个参数形式的iter()之类的高级技术 提升自己的技艺，并且追求干净、快速、地道的python代码  遍历一串顺序的数字：
+for i in [0, 1, 2, 3, 4, 5]: print i**2 for i in range(6): print i**2 for i in xragne(6): #xrange是range的iter版 print i**2 遍历一个数组：
+colors = [&amp;#39;red&amp;#39;, &amp;#39;green&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;] for i in range(len(colors)): print colors[i] for color in colors: print color 反向遍历：
+colors = [&amp;#39;red&amp;#39;, &amp;#39;green&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;] for i in range(len(colors)-1, -1, -1): print colors[i] for color in reversed(colors): print color 遍历同时获取索引编号：</description>
+    </item>
+    
+    <item>
+      <title>使用namedtuple代替tuple</title>
+      <link>http://www.example.com/posts/namedtuple_substitute_tuple/</link>
+      <pubDate>Sun, 22 Nov 2015 15:54:51 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/namedtuple_substitute_tuple/</guid>
+      <description>参考: Raymond Hettinger在PyCon US 2015上的演讲 Beyond PEP 8 &amp;ndash; Best practices for beautiful intelligible code
+ Python中的tuple是一个经常会用到的数据类型，比如在读取sql，csv数据时，但是他有一个非常大的问题就是一旦tuple中的元素个数变动了，那么代码是必然要一通大改了，而且使用下标的方式获取元素，时间长了完全不记得每个元素都是什么意义，当然，如果有一行注释来解释的话或许会好一点。比如这个段代码完全不知道p代表什么：
+p = (1,2) if p[0] &amp;gt; 1: print &amp;#39;xxxxxx&amp;#39; if p[1] &amp;gt; 3: print &amp;#39;yyyyyy&amp;#39; 其实自python 2.5开始对此问题已经有了一个解决方案，那就是namedtuple，来看一下是怎么用的：
+from collections import namedtuple Point = namedtuple(&amp;#39;Point&amp;#39;, [&amp;#39;x&amp;#39;, &amp;#39;y&amp;#39;]) p = Point(1,2) if p.x &amp;gt;= 1: print &amp;#39;xxxxxx&amp;#39; if p.y &amp;gt;= 3: print &amp;#39;yyyyyy&amp;#39; 通过使用namedtuple我们可以清晰地表达出tuple中每一个元素所代表的意义了</description>
+    </item>
+    
+    <item>
+      <title>编写漂亮的，可读的Python代码的最佳实践</title>
+      <link>http://www.example.com/posts/beautiful_python_code/</link>
+      <pubDate>Sun, 22 Nov 2015 10:14:52 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/beautiful_python_code/</guid>
+      <description>参考: Raymond Hettinger在PyCon US 2015上的演讲 Beyond PEP 8 &amp;ndash; Best practices for beautiful intelligible code
+通常的一些方式如list comprehension在此就不列举了，主要补充一些其他方式
+ 将非pythonic的代码做一层Adapter变成pythonic的 先看一段的代码：
+import jnettool.tools.elements.NetworkElement import jnettool.tools.Routing import jnettool.tools.RouteInspector ne = jnettool.tools.elements.NetworkElement(&amp;#39;x.x.x.x&amp;#39;) try: routing_table = ne.getRoutingTable() except jnettoll.tools.elements.MissingVar: logging.exception(&amp;#39;No routing table found&amp;#39;) ne.cleanup(&amp;#39;rollback&amp;#39;) else: num_routes = routing_table.getSize() for RToffset in range(num_routes): route = routing_table.getRouteByIndex(RToffset) name = route.getName() ipaddr = route.getIpAddr() print &amp;#34;%15s=&amp;gt; %s&amp;#34; % (name, ipaddr) finally: ne.cleanup(&amp;#39;commit&amp;#39;) ne.disconnect() 这段代码初看起来并没有什么问题，也的确没有什么问题，肯定能够正常运行，而且完全符合PEP 8标准。然而这看上去更像是一段Java的代码，带有浓烈的Java色彩，如getter, setter，getXXXByIndex，还有try&amp;hellip;except&amp;hellip;finally这一系列处理异常的方式（当然大多数语言也都是这样子），但这和Python的简约风格相去甚远。我们先来看一下理想的pythonic的版本长的样子：</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Excelight">
+    <meta name="description" content="Excelight&#39;s personal website">
+    <meta name="keywords" content="blog,developer,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TCP滑动窗口"/>
+<meta name="twitter:description" content="看过了一些博客后，还是准备简单记录下对滑动窗口的理解，毕竟自己动笔记录产生的记忆会更牢靠，理解也更深刻一点。参考：http://blog.chinaunix.net/uid-26275986-id-4109679.html https://www.zhihu.com/question/32255109
+ 1. 什么是滑动窗口? TCP协议头中有一个16位的窗口大小。这个窗口大小控制着发送方给接收方发送数据的速度。
+2. 滑动窗口是怎么工作的？ 假设A是发送方，B是接收方。无论发送还是接收都各自有一个缓冲区，一个是发送缓冲区（存放着需要发送的数据），一个是接收缓冲区（存放着接收到的数据）。
+B给A回复的ACK包中包含有窗口大小，A根据读取到的窗口大小来设置自身的窗口大小。这个窗口在A的发送缓冲区中从0开始向后移动，发送成功后才能移动。窗口越大，一次发送的数据就越多，反之越少。
+B每次的回复的ACK包中都会发送下次的窗口大小，通过调整窗口大小来控制发送方的发送速度，这就是所谓的流量控制。
+3. 拥塞控制 当tcp发送数据遇到网络拥塞情况时，使用一种叫做慢开始的拥塞控制方法： 1. 发送方维持一个叫做“拥塞窗口”的变量，该变量和接收端口共同决定了发送者的发送窗口 2. 当主机开始发送数据时，避免一下子将大量字节注入到网络，造成或者增加拥塞，选择发送一个1字节的试探报文 3. 当收到第一个字节的数据的确认后，就发送2个字节的报文 4. 若再次收到2个字节的确认，则发送4个字节，依次递增2的指数级 5. 最后会达到一个提前预设的“慢开始阈值”，比如24，即一次发送了24个分组，此时遵循下面的条件判定（cwnd为滑动窗口大小，ssthresh是慢开始阈值）： 1. cwnd &lt; ssthresh， 继续使用慢开始算法 2. cwnd &gt; ssthresh，停止使用慢开始算法，改用拥塞避免算法 3. cwnd = ssthresh，既可以使用慢开始算法，也可以使用拥塞避免算法； 6. 所谓拥塞避免算法就是：每经过一个往返时间RTT就把发送方的拥塞窗口&#43;1，即让拥塞窗口缓慢地增大，按照线性规律增长 7. 当出现网络拥塞，比如丢包时，将慢开始阈值设为原先的一半，然后将cwnd设为1，执行慢开始算法（较低的起点，指数级增长）
+上述方法的目的是在拥塞发生时循序减少主机发送到网络中的分组数，使得发生拥塞的路由器有足够的时间把队列中积压的分组处理完毕。慢开始和拥塞控制算法常常作为一个整体使用，而快重传和快恢复则是为了减少因为拥塞导致的数据包丢失带来的重传时间，从而避免传递无用的数据到网络。快重传的机制是： 1. 接收方建立这样的机制，如果一个包丢失，则对后续的包继续发送针对该包的重传请求； 2. 一旦发送方接收到三个一样的确认，就知道该包之后出现了错误，立刻重传该包； 3. 此时发送方开始执行“快恢复”算法： 1. 慢开始阈值减半； 2. cwnd设为慢开始门限减半后的数值； 3. 执行拥塞避免算法（高起点，线性增长）；"/>
+
+
+    <base href="http://www.example.com/posts/tcp_sliding_window/">
+    <title>
+  TCP滑动窗口 · Excelight&#39;s Blog
+</title>
+
+    <link rel="canonical" href="http://www.example.com/posts/tcp_sliding_window/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="http://www.example.com/css/coder.min.a3307e096757a84995f145daccdad26307f88b657e9946d207d011e314ef1442.css" integrity="sha256-ozB&#43;CWdXqEmV8UXazNrSYwf4i2V&#43;mUbSB9AR4xTvFEI=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="http://www.example.com/css/custom.css">
+    
+
+    <link rel="icon" type="image/png" href="http://www.example.com/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="http://www.example.com/img/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class=" ">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="http://www.example.com">
+      Excelight&#39;s Blog
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="http://www.example.com/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="http://www.example.com/tags/">Tags</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="http://www.example.com/about/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">TCP滑动窗口</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2017-09-03T16:16:12&#43;08:00'>
+                September 3, 2017
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              One minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="http://www.example.com/tags/tcp/">tcp</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+
+<blockquote>
+<p>看过了一些博客后，还是准备简单记录下对滑动窗口的理解，毕竟自己动笔记录产生的记忆会更牢靠，理解也更深刻一点。参考：<a href="http://blog.chinaunix.net/uid-26275986-id-4109679.html">http://blog.chinaunix.net/uid-26275986-id-4109679.html</a>   <a href="https://www.zhihu.com/question/32255109">https://www.zhihu.com/question/32255109</a></p>
+</blockquote>
+
+<h3 id="1-什么是滑动窗口">1. 什么是滑动窗口?</h3>
+
+<p>TCP协议头中有一个16位的窗口大小。这个窗口大小控制着发送方给接收方发送数据的速度。</p>
+
+<h3 id="2-滑动窗口是怎么工作的">2. 滑动窗口是怎么工作的？</h3>
+
+<p>假设A是发送方，B是接收方。无论发送还是接收都各自有一个缓冲区，一个是发送缓冲区（存放着需要发送的数据），一个是接收缓冲区（存放着接收到的数据）。</p>
+
+<p>B给A回复的ACK包中包含有窗口大小，A根据读取到的窗口大小来设置自身的窗口大小。这个窗口在A的发送缓冲区中从0开始向后移动，发送成功后才能移动。窗口越大，一次发送的数据就越多，反之越少。</p>
+
+<p>B每次的回复的ACK包中都会发送下次的窗口大小，通过调整窗口大小来控制发送方的发送速度，这就是所谓的流量控制。</p>
+
+<h3 id="3-拥塞控制">3. 拥塞控制</h3>
+
+<p>当tcp发送数据遇到网络拥塞情况时，使用一种叫做慢开始的拥塞控制方法：
+1. 发送方维持一个叫做“拥塞窗口”的变量，该变量和接收端口共同决定了发送者的发送窗口
+2. 当主机开始发送数据时，避免一下子将大量字节注入到网络，造成或者增加拥塞，选择发送一个1字节的试探报文
+3. 当收到第一个字节的数据的确认后，就发送2个字节的报文
+4. 若再次收到2个字节的确认，则发送4个字节，依次递增2的指数级
+5. 最后会达到一个提前预设的“慢开始阈值”，比如24，即一次发送了24个分组，此时遵循下面的条件判定（cwnd为滑动窗口大小，ssthresh是慢开始阈值）：
+    1. cwnd &lt; ssthresh， 继续使用慢开始算法
+    2. cwnd &gt; ssthresh，停止使用慢开始算法，改用拥塞避免算法
+    3. cwnd = ssthresh，既可以使用慢开始算法，也可以使用拥塞避免算法；
+6. 所谓拥塞避免算法就是：每经过一个往返时间RTT就把发送方的拥塞窗口+1，即让拥塞窗口缓慢地增大，按照线性规律增长
+7. 当出现网络拥塞，比如丢包时，将慢开始阈值设为原先的一半，然后将cwnd设为1，执行慢开始算法（较低的起点，指数级增长）</p>
+
+<p>上述方法的目的是在拥塞发生时循序减少主机发送到网络中的分组数，使得发生拥塞的路由器有足够的时间把队列中积压的分组处理完毕。慢开始和拥塞控制算法常常作为一个整体使用，而快重传和快恢复则是为了减少因为拥塞导致的数据包丢失带来的重传时间，从而避免传递无用的数据到网络。快重传的机制是：
+1. 接收方建立这样的机制，如果一个包丢失，则对后续的包继续发送针对该包的重传请求；
+2. 一旦发送方接收到三个一样的确认，就知道该包之后出现了错误，立刻重传该包；
+3. 此时发送方开始执行“快恢复”算法：
+    1. 慢开始阈值减半；
+    2. cwnd设为慢开始门限减半后的数值；
+    3. 执行拥塞避免算法（高起点，线性增长）；</p>
+
+      </div>
+
+      <footer>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yourdiscussshortname" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>Concentrate</p>
+    
+     © 2019
+    
+       · 
+      Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

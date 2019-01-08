@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vim on Excelight&#39;s Blog</title>
+    <link>http://www.example.com/tags/vim/</link>
+    <description>Recent content in Vim on Excelight&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 03 Jan 2019 15:20:59 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.example.com/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>vim常用配置</title>
+      <link>http://www.example.com/posts/vim-config/</link>
+      <pubDate>Thu, 03 Jan 2019 15:20:59 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/vim-config/</guid>
+      <description>vim常用配置及插件  基础vimrc配置文件：~/.vimrc
+set nu set ts=4 set expandtab set t_Co=256 colorscheme molokai syntax on set cursorline set cc=81 set laststatus=2 &amp;#34;let g:Powerline_symbols=&amp;#39;fancy&amp;#39; let g:Powerline_symbols=&amp;#39;unicode&amp;#39; filetype off set rtp+=~/.vim/bundle/Vundle.vim call vundle#begin() Plugin &amp;#39;VundleVim/Vundle.vim&amp;#39; Plugin &amp;#39;Lokaltog/vim-powerline&amp;#39; &amp;#34;底部状态栏 Plugin &amp;#39;Valloric/YouCompleteMe&amp;#39; &amp;#34;代码自动提示 Plugin &amp;#39;dgryski/vim-godef&amp;#39; &amp;#34;golang代码跳转 call vundle#end() filetype plugin indent on mac上安装需要先装MacVim代替系统自带vim，参照官方：https://github.com/Valloric/YouCompleteMe#mac-os-x
+&amp;gt; brew install macvim --with-override-system-vim 进入vim，执行:PluginInstall，安装所有插件
+ 安装YouCompleteMe相关依赖
+&amp;gt; cd ~/.vim/bundle/YouCompleteMe &amp;gt; ./install.py  Golang代码自动补全及跳转支持  YouCompleteMe支持golang代码补全
+&amp;gt; cd ~/.vim/bundle/YouCompleteMe &amp;gt; .</description>
+    </item>
+    
+  </channel>
+</rss>

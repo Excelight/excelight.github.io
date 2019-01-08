@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Https on Excelight&#39;s Blog</title>
+    <link>http://www.example.com/tags/https/</link>
+    <description>Recent content in Https on Excelight&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 03 Sep 2017 16:13:33 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.example.com/tags/https/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>简单理解HTTPS</title>
+      <link>http://www.example.com/posts/https/</link>
+      <pubDate>Sun, 03 Sep 2017 16:13:33 +0800</pubDate>
+      
+      <guid>http://www.example.com/posts/https/</guid>
+      <description>  最近GFW搞得风生水起，各种VPN都惨遭毒手，ShadowSocks由于其基于ssl的特性貌似生存状态还好（和HTTPS相同），不过网上也有好多人说现在已经能够嗅探到ShadowSocks服务了，于是又有了后来者ShadowSocksR。本文和GFW无关，只是由此想到需要对HTTPS有些了解，以解心中的一些疑惑。 参考文献：
+HTTPS原理
+HTTPS 原理简单介绍
+详解HTTPS原理
+ 为什么需要HTTPS  防窃听，数据加密 放篡改，数据校验 防冒充，身份验证  HTTPS是如何做的？ HTTPS是HTTP+SSL/TLS。SSL是在OSI模型中的表示层和会话层工作，其通过在握手时进行身份验证和在数据传输时进行数据加密、校验来达到安全
+加密方式  公开秘钥 公开密钥加密使用一对非对称的密钥.一把私钥一把公钥.私钥不能让任何人知道,公钥任何人都能获得.也就是发送密文一方使用对方的公钥进行加密处理,对方收到被加密的信息后,再使用自己的的私钥进行解密.利用这种方法不需要发送用来解密的私钥,也不必担心密钥被盗走。缺点是慢，资源消耗大 共享秘钥 共享秘钥即对称加密，加密解密使用同一组秘钥，其缺点是秘钥如果被盗取，则形同虚设。优点是速度快   所以应充分利用两者各有的优势,将多种方法组合起来用于通信。HTTPS采用共享密钥加密和公开密钥加密两者并用的混合加密机制。在交换密钥环节使用公开密钥加密方式,之后的建立通信交换报文阶段则使用共享加密方式。
+HTTPS通讯流程 以web访问HTTPS网站为例：
+C-&amp;gt;S: 1. 发送支持的协议版本，发送一个“随机数1” S-&amp;gt;C: 2. 确定协议版本，发送一个“随机数2”，发送证书 C-&amp;gt;S: 3. 验证证书通过，发送一个公钥加密过后的“随机数3” S-&amp;gt;C: 4. 协商好的加密方法 C-&amp;gt;S: 5. 发送公钥加密之后的秘钥，之后使用秘钥加密通讯 S-&amp;gt;C: ...  发送能够支持的 SSL/TLS 协议版本，加密方法，压缩方法等，生成一个随机数1 ，之后生成发密钥时用到，并送到服务端。 确定客户端能否支持的协议版本，若没有匹配，则取消此次连接。同时也确定加密方法和压缩方法。生成一个 随机数，同时发送随机数2和证书。 客户端认证证书是否有效，若无效，页面弹出警告窗口。若有效，取出证书中的公钥。生成一个随机数3 ，并用公钥加密之后发送给服务端。 此时服务端保存有两个明文的随机数1,2和一个加密之后的随机数3(又称premaster secret)。服务器通过密钥解密出随机数 ，三个随机数通过一个密钥生成器，生成之后通讯所需的对称密钥。 此时客户端有三个随机数1,2,3，通过一个密钥生成器，生成之后通讯所需的对称密钥，通过非对称的密钥（证书中公钥多对应的密钥）对对称密钥加密传输给服务端，服务端使用私钥解密出对称密钥。  看到这里我一开始有几点疑问：1.为什么要三个随机数，前两个随机数都有可能被窃听，感觉只需要第三个随机数就够了 2. 前两步可以被窃听，那证书也被篡改的话就可以伪装成服务端和客户端通信了。不过这两个问题我在参考文献1中都得到了答案
+ 为什么要三个随机数  “不管是客户端还是服务器，都需要随机数，这样生成的密钥才不会每次都一样。由于SSL协议中证书是静态的，因此十分有必要引入随机因素来保证协商出来的密钥的随机性。对于RSA密钥交换算法来说，premaster secret本身就是一个随机数，再加上hello消息中的随机数，三个随机数通过一个密钥导出器最终导出一个对称密钥。Premaster secret的存在在于SSL协议不信任每个主机都能产生完全随机的随机数，如果随机数不随机，那么premaster secret就有可能被才出来，那么仅适用premaster secret作为密钥就不合适了，因此必须引入新的随机因素，那么客户端和服务器加上premaster secret三个随机数一同生成的密钥就不容易被猜出了，一个伪随机数可能完全不随机，可是三个伪随机数就十分接近随机了。”  证书被篡改怎么办？ 数字证书CA（Certificate authority），这个我们在浏览器中经常能够看到，这是因为浏览器中预置了一些可信任的证书颁发机构，如果你的访问的网站的证书不在这个列表里面那么就会弹出一个对话框提示你证书有问题。当然除了这个预先内置的颁发机构列表，用户还可以自己导入自己认为可信的证书，比如铁老大的12306就是这么操作的，强制用户安装他的证书。  </description>
+    </item>
+    
+  </channel>
+</rss>
