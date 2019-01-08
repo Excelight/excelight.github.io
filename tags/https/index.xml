@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Https on Excelight&#39;s Blog</title>
-    <link>http://excelight.github.io/tags/https/</link>
+    <link>https://excelight.github.io/tags/https/</link>
     <description>Recent content in Https on Excelight&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 03 Sep 2017 16:13:33 +0800</lastBuildDate>
     
-	<atom:link href="http://excelight.github.io/tags/https/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://excelight.github.io/tags/https/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>简单理解HTTPS</title>
-      <link>http://excelight.github.io/posts/https/</link>
+      <link>https://excelight.github.io/posts/https/</link>
       <pubDate>Sun, 03 Sep 2017 16:13:33 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/https/</guid>
+      <guid>https://excelight.github.io/posts/https/</guid>
       <description>  最近GFW搞得风生水起，各种VPN都惨遭毒手，ShadowSocks由于其基于ssl的特性貌似生存状态还好（和HTTPS相同），不过网上也有好多人说现在已经能够嗅探到ShadowSocks服务了，于是又有了后来者ShadowSocksR。本文和GFW无关，只是由此想到需要对HTTPS有些了解，以解心中的一些疑惑。 参考文献：
 HTTPS原理
 HTTPS 原理简单介绍

@@ -17,12 +17,12 @@
 import jnettool.tools.elements.NetworkElement import jnettool.tools.Routing import jnettool.tools.RouteInspector ne = jnettool.tools.elements.NetworkElement(&#39;x.x.x.x&#39;) try: routing_table = ne.getRoutingTable() except jnettoll.tools.elements.MissingVar: logging.exception(&#39;No routing table found&#39;) ne.cleanup(&#39;rollback&#39;) else: num_routes = routing_table.getSize() for RToffset in range(num_routes): route = routing_table.getRouteByIndex(RToffset) name = route.getName() ipaddr = route.getIpAddr() print &#34;%15s=&gt; %s&#34; % (name, ipaddr) finally: ne.cleanup(&#39;commit&#39;) ne.disconnect() 这段代码初看起来并没有什么问题，也的确没有什么问题，肯定能够正常运行，而且完全符合PEP 8标准。然而这看上去更像是一段Java的代码，带有浓烈的Java色彩，如getter, setter，getXXXByIndex，还有try&hellip;except&hellip;finally这一系列处理异常的方式（当然大多数语言也都是这样子），但这和Python的简约风格相去甚远。我们先来看一下理想的pythonic的版本长的样子："/>
 
 
-    <base href="http://excelight.github.io/posts/beautiful_python_code/">
+    <base href="https://excelight.github.io/posts/beautiful_python_code/">
     <title>
   编写漂亮的，可读的Python代码的最佳实践 · Excelight&#39;s Blog
 </title>
 
-    <link rel="canonical" href="http://excelight.github.io/posts/beautiful_python_code/">
+    <link rel="canonical" href="https://excelight.github.io/posts/beautiful_python_code/">
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
@@ -31,7 +31,7 @@ import jnettool.tools.elements.NetworkElement import jnettool.tools.Routing impo
     
       
       
-      <link rel="stylesheet" href="http://excelight.github.io/css/coder.min.a3307e096757a84995f145daccdad26307f88b657e9946d207d011e314ef1442.css" integrity="sha256-ozB&#43;CWdXqEmV8UXazNrSYwf4i2V&#43;mUbSB9AR4xTvFEI=" crossorigin="anonymous" media="screen" />
+      <link rel="stylesheet" href="https://excelight.github.io/css/coder.min.a3307e096757a84995f145daccdad26307f88b657e9946d207d011e314ef1442.css" integrity="sha256-ozB&#43;CWdXqEmV8UXazNrSYwf4i2V&#43;mUbSB9AR4xTvFEI=" crossorigin="anonymous" media="screen" />
     
 
     
@@ -39,11 +39,11 @@ import jnettool.tools.elements.NetworkElement import jnettool.tools.Routing impo
     
 
     
-      <link rel="stylesheet" href="http://excelight.github.io/css/custom.css">
+      <link rel="stylesheet" href="https://excelight.github.io/css/custom.css">
     
 
-    <link rel="icon" type="image/png" href="http://excelight.github.io/img/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="http://excelight.github.io/img/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="https://excelight.github.io/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://excelight.github.io/img/favicon-16x16.png" sizes="16x16">
 
     
 
@@ -54,7 +54,7 @@ import jnettool.tools.elements.NetworkElement import jnettool.tools.Routing impo
     <main class="wrapper">
       <nav class="navigation">
   <section class="container">
-    <a class="navigation-title" href="http://excelight.github.io">
+    <a class="navigation-title" href="https://excelight.github.io">
       Excelight&#39;s Blog
     </a>
     <input type="checkbox" id="menu-toggle" />
@@ -63,15 +63,15 @@ import jnettool.tools.elements.NetworkElement import jnettool.tools.Routing impo
       
         
           <li class="navigation-item">
-            <a class="navigation-link" href="http://excelight.github.io/posts/">Blog</a>
+            <a class="navigation-link" href="https://excelight.github.io/posts/">Blog</a>
           </li>
         
           <li class="navigation-item">
-            <a class="navigation-link" href="http://excelight.github.io/tags/">Tags</a>
+            <a class="navigation-link" href="https://excelight.github.io/tags/">Tags</a>
           </li>
         
           <li class="navigation-item">
-            <a class="navigation-link" href="http://excelight.github.io/about/">About</a>
+            <a class="navigation-link" href="https://excelight.github.io/about/">About</a>
           </li>
         
       
@@ -105,7 +105,7 @@ import jnettool.tools.elements.NetworkElement import jnettool.tools.Routing impo
           
           <div class="tags">
   <i class="fas fa-tag"></i>
-    <a href="http://excelight.github.io/tags/python/">python</a></div>
+    <a href="https://excelight.github.io/tags/python/">python</a></div>
 
         </div>
       </header>

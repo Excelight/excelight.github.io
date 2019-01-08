@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Excelight&#39;s Blog</title>
-    <link>http://excelight.github.io/posts/</link>
+    <link>https://excelight.github.io/posts/</link>
     <description>Recent content in Posts on Excelight&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 03 Jan 2019 15:20:59 +0800</lastBuildDate>
     
-	<atom:link href="http://excelight.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://excelight.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>vim常用配置</title>
-      <link>http://excelight.github.io/posts/vim-config/</link>
+      <link>https://excelight.github.io/posts/vim-config/</link>
       <pubDate>Thu, 03 Jan 2019 15:20:59 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/vim-config/</guid>
+      <guid>https://excelight.github.io/posts/vim-config/</guid>
       <description>vim常用配置及插件  基础vimrc配置文件：~/.vimrc
 set nu set ts=4 set expandtab set t_Co=256 colorscheme molokai syntax on set cursorline set cc=81 set laststatus=2 &amp;#34;let g:Powerline_symbols=&amp;#39;fancy&amp;#39; let g:Powerline_symbols=&amp;#39;unicode&amp;#39; filetype off set rtp+=~/.vim/bundle/Vundle.vim call vundle#begin() Plugin &amp;#39;VundleVim/Vundle.vim&amp;#39; Plugin &amp;#39;Lokaltog/vim-powerline&amp;#39; &amp;#34;底部状态栏 Plugin &amp;#39;Valloric/YouCompleteMe&amp;#39; &amp;#34;代码自动提示 Plugin &amp;#39;dgryski/vim-godef&amp;#39; &amp;#34;golang代码跳转 call vundle#end() filetype plugin indent on mac上安装需要先装MacVim代替系统自带vim，参照官方：https://github.com/Valloric/YouCompleteMe#mac-os-x
 &amp;gt; brew install macvim --with-override-system-vim 进入vim，执行:PluginInstall，安装所有插件
@@ -27,10 +27,10 @@ set nu set ts=4 set expandtab set t_Co=256 colorscheme molokai syntax on set cur
     
     <item>
       <title>TCP滑动窗口</title>
-      <link>http://excelight.github.io/posts/tcp_sliding_window/</link>
+      <link>https://excelight.github.io/posts/tcp_sliding_window/</link>
       <pubDate>Sun, 03 Sep 2017 16:16:12 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/tcp_sliding_window/</guid>
+      <guid>https://excelight.github.io/posts/tcp_sliding_window/</guid>
       <description>看过了一些博客后，还是准备简单记录下对滑动窗口的理解，毕竟自己动笔记录产生的记忆会更牢靠，理解也更深刻一点。参考：http://blog.chinaunix.net/uid-26275986-id-4109679.html https://www.zhihu.com/question/32255109
  1. 什么是滑动窗口? TCP协议头中有一个16位的窗口大小。这个窗口大小控制着发送方给接收方发送数据的速度。
 2. 滑动窗口是怎么工作的？ 假设A是发送方，B是接收方。无论发送还是接收都各自有一个缓冲区，一个是发送缓冲区（存放着需要发送的数据），一个是接收缓冲区（存放着接收到的数据）。
@@ -42,10 +42,10 @@ B每次的回复的ACK包中都会发送下次的窗口大小，通过调整窗�
     
     <item>
       <title>简单理解HTTPS</title>
-      <link>http://excelight.github.io/posts/https/</link>
+      <link>https://excelight.github.io/posts/https/</link>
       <pubDate>Sun, 03 Sep 2017 16:13:33 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/https/</guid>
+      <guid>https://excelight.github.io/posts/https/</guid>
       <description>  最近GFW搞得风生水起，各种VPN都惨遭毒手，ShadowSocks由于其基于ssl的特性貌似生存状态还好（和HTTPS相同），不过网上也有好多人说现在已经能够嗅探到ShadowSocks服务了，于是又有了后来者ShadowSocksR。本文和GFW无关，只是由此想到需要对HTTPS有些了解，以解心中的一些疑惑。 参考文献：
 HTTPS原理
 HTTPS 原理简单介绍
@@ -59,10 +59,10 @@ C-&amp;gt;S: 1. 发送支持的协议版本，发送一个“随机数1” S-&am
     
     <item>
       <title>一个简单的图片找茬工具</title>
-      <link>http://excelight.github.io/posts/python_image_differ/</link>
+      <link>https://excelight.github.io/posts/python_image_differ/</link>
       <pubDate>Sun, 02 Jul 2017 16:11:07 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/python_image_differ/</guid>
+      <guid>https://excelight.github.io/posts/python_image_differ/</guid>
       <description>大家来找茬应该大部分人都玩过吧，最近网上看到个图片找茬的活动，给出一张jpg图片文件，其中内容是左右两边各一张相似的图片，中间有白色的背景作为间隔，需要找出两张图的不同之处，由于自己眼力不行于是就想通过程序来实现。本文就来介绍一下这个简单的找茬程序，我称之为imageDiffer。源代码可在https://github.com/Excelight/imageDiffer 找到
  需求 根据传入的一张jpg图片(包含左右各一张图)，显示出两张图片的不同之处
 工具  语言：python lib: Pillow，一个python图像处理库  流程 1. 图片分割 这一步，我们需要将传入的图片分割成两个大小相同的图片，作为后续找不同的基础。这一步我们使用了最简单的方式就是，直接对半分，可以使用Image.crop函数
@@ -72,10 +72,10 @@ def imageTrim(imageIn, bgColor): # 创建一张纯背景色的图 imBg = Image.n
     
     <item>
       <title>Go的12个最佳实践</title>
-      <link>http://excelight.github.io/posts/golang_12_best_practices/</link>
+      <link>https://excelight.github.io/posts/golang_12_best_practices/</link>
       <pubDate>Mon, 22 May 2017 16:09:35 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/golang_12_best_practices/</guid>
+      <guid>https://excelight.github.io/posts/golang_12_best_practices/</guid>
       <description>参考视频：https://www.youtube.com/watch?v=8D3Vmm1BGoY
  1. 避免过多的嵌套 先判断错误，错误后直接返回，而不要在错误的if块内写后续逻辑
 2. 尽量避免重复 3. 使用type switch来处理类型 调用方不用关心v的类型，不用提前转换
@@ -84,10 +84,10 @@ switch v.(type) { case string: ... case int: ... default: ... } 4. function adap
     
     <item>
       <title>Hello Hugo!</title>
-      <link>http://excelight.github.io/posts/hello_hugo/</link>
+      <link>https://excelight.github.io/posts/hello_hugo/</link>
       <pubDate>Sat, 29 Apr 2017 16:05:46 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/hello_hugo/</guid>
+      <guid>https://excelight.github.io/posts/hello_hugo/</guid>
       <description>最近要开始捣腾Golang了，所以从工具入手，无意中看了个Go语言相关的视频，演讲者就是我现在使用的博客工具hugo的作者，所以顺便调研了下，感觉可以为我所用。
  把这篇文章作为新博客的首篇，一来是为了描述下这个博客的来历，二来是为了避免以后写新文章不知道如何操作，毕竟还是需要一些命令的，所以正好记录下，免得经常去翻官网
 这里先贴一下hugo的项目地址https://github.com/spf13/hugo
@@ -101,10 +101,10 @@ $ cd themes $ git clone https://github.com/digitalcraftsman/hugo-cactus-theme.gi
     
     <item>
       <title>Redis中sorted set调优</title>
-      <link>http://excelight.github.io/posts/redis_sortedset_optimize/</link>
+      <link>https://excelight.github.io/posts/redis_sortedset_optimize/</link>
       <pubDate>Thu, 07 Jul 2016 16:04:21 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/redis_sortedset_optimize/</guid>
+      <guid>https://excelight.github.io/posts/redis_sortedset_optimize/</guid>
       <description>背景 公司的监控系统的缓存是使用的redis中的sorted set的数据结构来存储。但是使用过程中发现redis的内存消耗特别多，甚至撑暴内存，导致引发线上问题。后来经过计算，发现redis实际消耗的内存远比理论应消耗的内存大(理论上一个数据点包含一个时间戳32位，一个数据值最多64位，总共12字节，而实际占用空间达到150字节左右，相差10倍)，这就引发了我们对sorted set的深入研究
 如何使用 我们使用sorted set存储监控数据的格式为
  key: metric_id (指标id，如cpu,内存) score: unix时间戳 member: unix时间戳|监控数值（如1432343233|60）  获取监控数据的时候使用 ZRANGE metric_id 0 1432343233 就可以得到按时间排序的各个数据点的值
@@ -114,10 +114,10 @@ $ cd themes $ git clone https://github.com/digitalcraftsman/hugo-cactus-theme.gi
     
     <item>
       <title>Python 环境搭建</title>
-      <link>http://excelight.github.io/posts/python_env_setup/</link>
+      <link>https://excelight.github.io/posts/python_env_setup/</link>
       <pubDate>Sat, 30 Apr 2016 16:00:13 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/python_env_setup/</guid>
+      <guid>https://excelight.github.io/posts/python_env_setup/</guid>
       <description>python源码安装
 1. 下载安装包 Python2.7.x.tgz 2. 解压 3. ./configure 4. make 5. make install pip 安装（cent os）
 yum install python-pip virtualenv安装
@@ -130,10 +130,10 @@ pip install -r requirements.</description>
     
     <item>
       <title>Python常用Decorator</title>
-      <link>http://excelight.github.io/posts/python_useful_decorator/</link>
+      <link>https://excelight.github.io/posts/python_useful_decorator/</link>
       <pubDate>Tue, 08 Dec 2015 15:58:28 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/python_useful_decorator/</guid>
+      <guid>https://excelight.github.io/posts/python_useful_decorator/</guid>
       <description>参考: PythonDecoratorLibrary 
  Function Timeout(设置函数超时) import signal import functools class TimeoutError(Exception): pass def timeout(seconds, error_message = &amp;#39;Function call timed out&amp;#39;): def decorated(func): def _handle_timeout(signum, frame): raise TimeoutError(error_message) def wrapper(*args, **kwargs): signal.signal(signal.SIGALRM, _handle_timeout) signal.alarm(seconds) try: result = func(*args, **kwargs) finally: signal.alarm(0) return result return functools.wraps(func)(wrapper) return decorated example:
 import time @timeout(1, &amp;#39;Function slow; aborted&amp;#39;) def slow_function(): time.</description>
@@ -141,10 +141,10 @@ import time @timeout(1, &amp;#39;Function slow; aborted&amp;#39;) def slow_funct
     
     <item>
       <title>将代码转换为漂亮的，地道的Python代码[操作指南，干货]</title>
-      <link>http://excelight.github.io/posts/change_python_code_style/</link>
+      <link>https://excelight.github.io/posts/change_python_code_style/</link>
       <pubDate>Sun, 29 Nov 2015 15:56:16 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/change_python_code_style/</guid>
+      <guid>https://excelight.github.io/posts/change_python_code_style/</guid>
       <description>参考: Raymond Hettinger在PyCon US 2013上的演讲 Transforming Code into Beautiful, Idiomatic Python
  立即改变  将传统的使用索引i的循环方式改变为python core的习惯方式 学习for-else语句，以及带有两个参数形式的iter()之类的高级技术 提升自己的技艺，并且追求干净、快速、地道的python代码  遍历一串顺序的数字：
 for i in [0, 1, 2, 3, 4, 5]: print i**2 for i in range(6): print i**2 for i in xragne(6): #xrange是range的iter版 print i**2 遍历一个数组：
@@ -154,10 +154,10 @@ colors = [&amp;#39;red&amp;#39;, &amp;#39;green&amp;#39;, &amp;#39;blue&amp;#39;
     
     <item>
       <title>使用namedtuple代替tuple</title>
-      <link>http://excelight.github.io/posts/namedtuple_substitute_tuple/</link>
+      <link>https://excelight.github.io/posts/namedtuple_substitute_tuple/</link>
       <pubDate>Sun, 22 Nov 2015 15:54:51 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/namedtuple_substitute_tuple/</guid>
+      <guid>https://excelight.github.io/posts/namedtuple_substitute_tuple/</guid>
       <description>参考: Raymond Hettinger在PyCon US 2015上的演讲 Beyond PEP 8 &amp;ndash; Best practices for beautiful intelligible code
  Python中的tuple是一个经常会用到的数据类型，比如在读取sql，csv数据时，但是他有一个非常大的问题就是一旦tuple中的元素个数变动了，那么代码是必然要一通大改了，而且使用下标的方式获取元素，时间长了完全不记得每个元素都是什么意义，当然，如果有一行注释来解释的话或许会好一点。比如这个段代码完全不知道p代表什么：
 p = (1,2) if p[0] &amp;gt; 1: print &amp;#39;xxxxxx&amp;#39; if p[1] &amp;gt; 3: print &amp;#39;yyyyyy&amp;#39; 其实自python 2.5开始对此问题已经有了一个解决方案，那就是namedtuple，来看一下是怎么用的：
@@ -166,10 +166,10 @@ from collections import namedtuple Point = namedtuple(&amp;#39;Point&amp;#39;, [
     
     <item>
       <title>编写漂亮的，可读的Python代码的最佳实践</title>
-      <link>http://excelight.github.io/posts/beautiful_python_code/</link>
+      <link>https://excelight.github.io/posts/beautiful_python_code/</link>
       <pubDate>Sun, 22 Nov 2015 10:14:52 +0800</pubDate>
       
-      <guid>http://excelight.github.io/posts/beautiful_python_code/</guid>
+      <guid>https://excelight.github.io/posts/beautiful_python_code/</guid>
       <description>参考: Raymond Hettinger在PyCon US 2015上的演讲 Beyond PEP 8 &amp;ndash; Best practices for beautiful intelligible code
 通常的一些方式如list comprehension在此就不列举了，主要补充一些其他方式
  将非pythonic的代码做一层Adapter变成pythonic的 先看一段的代码：

@@ -22,12 +22,12 @@ C-&gt;S: 1. 发送支持的协议版本，发送一个“随机数1” S-&gt;C: 
  为什么要三个随机数  “不管是客户端还是服务器，都需要随机数，这样生成的密钥才不会每次都一样。由于SSL协议中证书是静态的，因此十分有必要引入随机因素来保证协商出来的密钥的随机性。对于RSA密钥交换算法来说，premaster secret本身就是一个随机数，再加上hello消息中的随机数，三个随机数通过一个密钥导出器最终导出一个对称密钥。Premaster secret的存在在于SSL协议不信任每个主机都能产生完全随机的随机数，如果随机数不随机，那么premaster secret就有可能被才出来，那么仅适用premaster secret作为密钥就不合适了，因此必须引入新的随机因素，那么客户端和服务器加上premaster secret三个随机数一同生成的密钥就不容易被猜出了，一个伪随机数可能完全不随机，可是三个伪随机数就十分接近随机了。”  证书被篡改怎么办？ 数字证书CA（Certificate authority），这个我们在浏览器中经常能够看到，这是因为浏览器中预置了一些可信任的证书颁发机构，如果你的访问的网站的证书不在这个列表里面那么就会弹出一个对话框提示你证书有问题。当然除了这个预先内置的颁发机构列表，用户还可以自己导入自己认为可信的证书，比如铁老大的12306就是这么操作的，强制用户安装他的证书。  "/>
 
 
-    <base href="http://excelight.github.io/posts/https/">
+    <base href="https://excelight.github.io/posts/https/">
     <title>
   简单理解HTTPS · Excelight&#39;s Blog
 </title>
 
-    <link rel="canonical" href="http://excelight.github.io/posts/https/">
+    <link rel="canonical" href="https://excelight.github.io/posts/https/">
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
@@ -36,7 +36,7 @@ C-&gt;S: 1. 发送支持的协议版本，发送一个“随机数1” S-&gt;C: 
     
       
       
-      <link rel="stylesheet" href="http://excelight.github.io/css/coder.min.a3307e096757a84995f145daccdad26307f88b657e9946d207d011e314ef1442.css" integrity="sha256-ozB&#43;CWdXqEmV8UXazNrSYwf4i2V&#43;mUbSB9AR4xTvFEI=" crossorigin="anonymous" media="screen" />
+      <link rel="stylesheet" href="https://excelight.github.io/css/coder.min.a3307e096757a84995f145daccdad26307f88b657e9946d207d011e314ef1442.css" integrity="sha256-ozB&#43;CWdXqEmV8UXazNrSYwf4i2V&#43;mUbSB9AR4xTvFEI=" crossorigin="anonymous" media="screen" />
     
 
     
@@ -44,11 +44,11 @@ C-&gt;S: 1. 发送支持的协议版本，发送一个“随机数1” S-&gt;C: 
     
 
     
-      <link rel="stylesheet" href="http://excelight.github.io/css/custom.css">
+      <link rel="stylesheet" href="https://excelight.github.io/css/custom.css">
     
 
-    <link rel="icon" type="image/png" href="http://excelight.github.io/img/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="http://excelight.github.io/img/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="https://excelight.github.io/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://excelight.github.io/img/favicon-16x16.png" sizes="16x16">
 
     
 
@@ -59,7 +59,7 @@ C-&gt;S: 1. 发送支持的协议版本，发送一个“随机数1” S-&gt;C: 
     <main class="wrapper">
       <nav class="navigation">
   <section class="container">
-    <a class="navigation-title" href="http://excelight.github.io">
+    <a class="navigation-title" href="https://excelight.github.io">
       Excelight&#39;s Blog
     </a>
     <input type="checkbox" id="menu-toggle" />
@@ -68,15 +68,15 @@ C-&gt;S: 1. 发送支持的协议版本，发送一个“随机数1” S-&gt;C: 
       
         
           <li class="navigation-item">
-            <a class="navigation-link" href="http://excelight.github.io/posts/">Blog</a>
+            <a class="navigation-link" href="https://excelight.github.io/posts/">Blog</a>
           </li>
         
           <li class="navigation-item">
-            <a class="navigation-link" href="http://excelight.github.io/tags/">Tags</a>
+            <a class="navigation-link" href="https://excelight.github.io/tags/">Tags</a>
           </li>
         
           <li class="navigation-item">
-            <a class="navigation-link" href="http://excelight.github.io/about/">About</a>
+            <a class="navigation-link" href="https://excelight.github.io/about/">About</a>
           </li>
         
       
@@ -110,7 +110,7 @@ C-&gt;S: 1. 发送支持的协议版本，发送一个“随机数1” S-&gt;C: 
           
           <div class="tags">
   <i class="fas fa-tag"></i>
-    <a href="http://excelight.github.io/tags/https/">https</a></div>
+    <a href="https://excelight.github.io/tags/https/">https</a></div>
 
         </div>
       </header>
