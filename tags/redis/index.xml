@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Redis on Excelight&#39;s Blog</title>
-    <link>http://www.example.com/tags/redis/</link>
+    <link>http://excelight.github.io/tags/redis/</link>
     <description>Recent content in Redis on Excelight&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 07 Jul 2016 16:04:21 +0800</lastBuildDate>
     
-	<atom:link href="http://www.example.com/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://excelight.github.io/tags/redis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Redis中sorted set调优</title>
-      <link>http://www.example.com/posts/redis_sortedset_optimize/</link>
+      <link>http://excelight.github.io/posts/redis_sortedset_optimize/</link>
       <pubDate>Thu, 07 Jul 2016 16:04:21 +0800</pubDate>
       
-      <guid>http://www.example.com/posts/redis_sortedset_optimize/</guid>
+      <guid>http://excelight.github.io/posts/redis_sortedset_optimize/</guid>
       <description>背景 公司的监控系统的缓存是使用的redis中的sorted set的数据结构来存储。但是使用过程中发现redis的内存消耗特别多，甚至撑暴内存，导致引发线上问题。后来经过计算，发现redis实际消耗的内存远比理论应消耗的内存大(理论上一个数据点包含一个时间戳32位，一个数据值最多64位，总共12字节，而实际占用空间达到150字节左右，相差10倍)，这就引发了我们对sorted set的深入研究
 如何使用 我们使用sorted set存储监控数据的格式为
  key: metric_id (指标id，如cpu,内存) score: unix时间戳 member: unix时间戳|监控数值（如1432343233|60）  获取监控数据的时候使用 ZRANGE metric_id 0 1432343233 就可以得到按时间排序的各个数据点的值

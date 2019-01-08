@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Other on Excelight&#39;s Blog</title>
-    <link>http://www.example.com/tags/other/</link>
+    <link>http://excelight.github.io/tags/other/</link>
     <description>Recent content in Other on Excelight&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 02 Jul 2017 16:11:07 +0800</lastBuildDate>
     
-	<atom:link href="http://www.example.com/tags/other/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://excelight.github.io/tags/other/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>一个简单的图片找茬工具</title>
-      <link>http://www.example.com/posts/python_image_differ/</link>
+      <link>http://excelight.github.io/posts/python_image_differ/</link>
       <pubDate>Sun, 02 Jul 2017 16:11:07 +0800</pubDate>
       
-      <guid>http://www.example.com/posts/python_image_differ/</guid>
+      <guid>http://excelight.github.io/posts/python_image_differ/</guid>
       <description>大家来找茬应该大部分人都玩过吧，最近网上看到个图片找茬的活动，给出一张jpg图片文件，其中内容是左右两边各一张相似的图片，中间有白色的背景作为间隔，需要找出两张图的不同之处，由于自己眼力不行于是就想通过程序来实现。本文就来介绍一下这个简单的找茬程序，我称之为imageDiffer。源代码可在https://github.com/Excelight/imageDiffer 找到
  需求 根据传入的一张jpg图片(包含左右各一张图)，显示出两张图片的不同之处
 工具  语言：python lib: Pillow，一个python图像处理库  流程 1. 图片分割 这一步，我们需要将传入的图片分割成两个大小相同的图片，作为后续找不同的基础。这一步我们使用了最简单的方式就是，直接对半分，可以使用Image.crop函数
@@ -26,10 +26,10 @@ def imageTrim(imageIn, bgColor): # 创建一张纯背景色的图 imBg = Image.n
     
     <item>
       <title>Hello Hugo!</title>
-      <link>http://www.example.com/posts/hello_hugo/</link>
+      <link>http://excelight.github.io/posts/hello_hugo/</link>
       <pubDate>Sat, 29 Apr 2017 16:05:46 +0800</pubDate>
       
-      <guid>http://www.example.com/posts/hello_hugo/</guid>
+      <guid>http://excelight.github.io/posts/hello_hugo/</guid>
       <description>最近要开始捣腾Golang了，所以从工具入手，无意中看了个Go语言相关的视频，演讲者就是我现在使用的博客工具hugo的作者，所以顺便调研了下，感觉可以为我所用。
  把这篇文章作为新博客的首篇，一来是为了描述下这个博客的来历，二来是为了避免以后写新文章不知道如何操作，毕竟还是需要一些命令的，所以正好记录下，免得经常去翻官网
 这里先贴一下hugo的项目地址https://github.com/spf13/hugo
